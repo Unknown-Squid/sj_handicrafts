@@ -1,15 +1,16 @@
 "use client";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
-import L from "leaflet";
-import "leaflet/dist/leaflet.css";
 import Header from "../components/header/header";
 import Footer from "../components/footer/footer";
 import { useInView } from "../hooks/useInView";
+import { useEffect, useRef, useState } from "react";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
 
 // Image Imports
 import shielaProfile from "../../public/profiles/shiela profile.png";
 import companyLogo from "../../public/logos/company logo.png";
+import VideoIframe from "../components/iframe/VideoIframe";
 
 // Default Leaflet Icon Settings
 L.Icon.Default.mergeOptions({
@@ -17,35 +18,6 @@ L.Icon.Default.mergeOptions({
   iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
   shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
 });
-
-// Reusable Video Iframe Component
-function VideoIframe({
-  src,
-  isVisible,
-  animationClass,
-  iframeRef,
-  autoplay = false,
-}: {
-  src: string;
-  isVisible: boolean;
-  animationClass: string;
-  iframeRef: React.RefObject<HTMLIFrameElement>;
-  autoplay?: boolean;
-}) {
-  const videoSrc = autoplay && isVisible ? `${src}&autoplay=1&mute=1&${Date.now()}` : src;
-
-  return (
-    <iframe
-      className={`${isVisible ? animationClass : "opacity-0"}`}
-      ref={iframeRef}
-      width="90%"
-      height="500"
-      src={videoSrc}
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowFullScreen
-    />
-  );
-}
 
 export default function AboutUs() {
   const [youtubeRef, youtubeVisible] = useInView<HTMLIFrameElement>({ threshold: 0.5 });
@@ -97,9 +69,9 @@ export default function AboutUs() {
     <div className="bg-transparent h-700px w-full flex flex-col z-10 overflow-auto scroll-bar">
       <div className="w-full h-fit bg-black/[.55]">
         <Header />
-        {/* Hero Section */}
-        <div className="w-full h-[700px] bg-[#65482C]/[.5] flex">
-          <div className="w-[42%] flex justify-end relative mt-2">
+
+        <div className="w-full h-[700px] bg-[#65482C]/[.5] flex flex-row">
+          <div className="bg-transparent w-[42%] h-full flex justify-end relative mt-2">
             <Image
               src={shielaProfile}
               width={500}
@@ -108,22 +80,26 @@ export default function AboutUs() {
               className="w-[60%] h-[70%] absolute top-10 left-[15%] animate-fadeIn"
             />
           </div>
-          <div className="w-[58%] flex flex-col items-center mt-2">
-            <div className="flex-col w-full items-center justify-center gap-1 mt-10 text-[#FFE4CC]">
-              <h1 className="text-[35px] font-merriweatherBold animate-slideInTop">SJ HANDICRAFTS</h1>
-              <p className="text-[14px] font-merriweatherBoldItalic animate-slideInTop">
-                &#34;Creativity Crafted by the Community&#34;
-              </p>
+
+          <div className="bg-transparent w-[58%] h-full flex flex-col items-center mt-2">
+            <div className="flex-col flex w-full items-center justify-center gap-1 mt-10">
+              <h1 className="text-[#FFE4CC] text-[35px] font-merriweatherBold animate-slideInTop">SJ HANDICRAFTS</h1>
+              <p className="text-[#FFE4CC] text-[14px] font-merriweatherBoldItalic animate-slideInTop">&#34;Creativity Crafted by the Community&#34;</p>
             </div>
-            <p className="text-[20px] font-urbanistSemiBold w-[90%] text-justify mt-12 leading-[1.6] animate-slideInBottom">
-              SJ Handicrafts were established last July 2020 at the hometown of my husband – Ligao City, Albay...
+
+            <p className="text-[#FFE4CC] text-[20px] font-urbanistSemiBold w-[90%] text-justify mt-12 leading-[1.6] animate-slideInBottom">
+              SJ Handicrafts were established last July 2020 at the hometown of my husband – Ligao City, Albay. We decided to settle in the province last 2019, because we fell in love with the slow paced environment and its simplicity. As we build our nest, we used ethical and sustainable products with the help of our local artisans and that started the birth of SJ Handicrafts – to support local artisans.
+              <br /><br />
+              Our handicraft product is carefully and meaningfully curated by our local artisans. We use local natural resources – Abaca and Seagrass.
+              <br /><br />
+              The individual artisanship of our handcrafted items is the paramount criterion of our brand.
             </p>
           </div>
         </div>
       </div>
 
-      {/* Videos Section */}
-      <div className="w-full h-fit bg-black/[.55] py-16 flex flex-col items-center gap-16">
+      <div className="w-full h-fit bg-black/[.55]">
+        <div className="w-auto h-auto flex flex-col justify-center items-center gap-16 py-16">
         <VideoIframe
           src="https://www.youtube.com/embed/ssFl9V4d-pg"
           isVisible={animatedSections.youtube}
@@ -137,41 +113,54 @@ export default function AboutUs() {
           animationClass="animate-fadeIn"
           iframeRef={facebookRef}
         />
-      </div>
-
-      {/* Company Information Section */}
-      <div className="w-full bg-[#FFE4CC]">
-        <div className="h-[750px] flex justify-center gap-10 bg-black/[.15]">
-          <div ref={companyAboutRef} className="w-[45%] flex flex-col gap-5">
-            <p className={`text-lg font-poppinsRegular ${animatedSections.companyAbout ? "animate-slideInBottom" : ""}`}>
-              <b>Location: </b>SJ Handicrafts Trading Purok 3, Brgy, Ligao, 4504 Albay
-            </p>
-            <div ref={mapRef} className="h-[400px] w-full bg-white rounded-lg" />
-          </div>
-
-          {/* Core Values */}
-          <div className="w-[45%] relative">
-            <Image
-              width={500}
-              height={500}
-              src={companyLogo}
-              className={`w-[250px] h-[250px] mt-20 ${animatedSections.companyAbout ? "animate-fadeIn" : ""}`}
-              alt="Company Logo"
-            />
-            {["Core Values", "Excellence", "Quality", "Social Responsibility"].map((value, index) => (
-              <p
-                key={index}
-                className={`absolute top-[${12 + index * 8}%] right-[${40 + index * 5}%] text-2xl font-poppinsBold ${
-                  animatedSections.companyAbout ? "fade-in-left2" : "opacity-0"
-                }`}
-                style={{ animationDelay: `${0.3 + index * 0.1}s` }}
-              >
-                {value}
-              </p>
-            ))}
-          </div>
         </div>
       </div>
+
+      <div className="w-full h-fit bg-[#FFE4CC]">
+          <div className="h-[750px] w-full flex flex-row justify-center gap-10 bg-black/[.15]">
+            <div
+              ref={companyAboutRef} 
+              className="w-[45%] h-full justify-center flex flex-col gap-5">
+               <p className={`text-lg text-[#65482C] font-poppinsRegular ${animatedSections.companyAbout ? "animate-slideInBottom" : ""} opacity-0`}><b>Location: </b>SJ Handicrafts Trading Purok 3, Brgy, Ligao, 4504 Albay</p>
+              <div ref={mapRef} className={`h-[400px] w-full bg-white rounded-lg ${animatedSections.companyAbout ? "animate-fadeIn" : ""} opacity-0`}/>
+            </div>
+
+            <div className="w-[45%] h-full flex ms-20 relative">
+              <Image
+                width={500}
+                height={500}
+                src={companyLogo}
+                className={`w-[250px] h-[250px] mt-20 ${animatedSections.companyAbout ? "animate-fadeIn" : ""} opacity-0`}
+                alt="Company Logo"
+              />
+              <p 
+                className={`absolute top-[12%] right-[40%] text-2xl text-[#65482C] font-poppinsBold ${animatedSections.companyAbout ? "fade-in-left2" : ""} opacity-0`}
+                style={{ animationDelay: "0.3s" }}
+              >
+                Core Values
+              </p>
+              <p 
+                className={`absolute top-[20%] right-[35%] text-2xl text-[#65482C] font-poppinsBold ${animatedSections.companyAbout ? "fade-in-left2" : ""} opacity-0`}
+                style={{ animationDelay: "0.4s" }}
+              >
+                Excellence
+              </p>
+              <p 
+                className={`absolute top-[35%] right-[45%] text-2xl text-[#65482C] font-poppinsBold ${animatedSections.companyAbout ? "fade-in-left2" : ""} opacity-0`}
+                style={{ animationDelay: "0.5s" }}
+              >
+                Quality
+              </p>
+              <p 
+                className={`absolute top-[45%] right-[55%] text-2xl text-[#65482C] font-poppinsBold ${animatedSections.companyAbout ? "fade-in-left2" : ""} opacity-0`}
+                style={{ animationDelay: "0.6s" }}
+              >
+                Social Responsibility
+              </p>
+            </div>
+          </div>
+      </div>
+
       <Footer />
     </div>
   );
