@@ -1,10 +1,13 @@
 "use client";
+import dynamic from "next/dynamic";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Header from "../components/header/header";
 import Footer from "../components/footer/footer";
 import { useInView } from "../hooks/useInView";
-import { useEffect, useRef, useState } from "react";
-import L from "leaflet";
+
+// Dynamically import Leaflet (client-side only)
+const L = typeof window !== "undefined" ? require("leaflet") : null;
 import "leaflet/dist/leaflet.css";
 
 // Image Imports
@@ -12,12 +15,13 @@ import shielaProfile from "../../public/profiles/shiela profile.png";
 import companyLogo from "../../public/logos/company logo.png";
 import VideoIframe from "../components/iframe/VideoIframe";
 
-// Default Leaflet Icon Settings
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
-  iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
-  shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
-});
+if (L) {
+  L.Icon.Default.mergeOptions({
+    iconRetinaUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png",
+    iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
+    shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
+  });
+}
 
 export default function AboutUs() {
   const [youtubeRef, youtubeVisible] = useInView<HTMLIFrameElement>({ threshold: 0.5 });
@@ -43,7 +47,7 @@ export default function AboutUs() {
 
   // Initialize Leaflet Map
   useEffect(() => {
-    if (mapRef.current) {
+    if (typeof window !== "undefined" && L && mapRef.current) {
       const map = L.map(mapRef.current, {
         dragging: false,
         touchZoom: false,
@@ -122,7 +126,7 @@ export default function AboutUs() {
               ref={companyAboutRef} 
               className="w-[45%] h-full justify-center flex flex-col gap-5">
                <p className={`text-lg text-[#65482C] font-poppinsRegular ${animatedSections.companyAbout ? "animate-slideInBottom" : ""} opacity-0`}><b>Location: </b>SJ Handicrafts Trading Purok 3, Brgy, Ligao, 4504 Albay</p>
-              <div ref={mapRef} className={`h-[400px] w-full bg-white rounded-lg ${animatedSections.companyAbout ? "animate-fadeIn" : ""} opacity-0`}/>
+              <div ref={mapRef} className={`h-[400px] w-full bg-white rounded-lg `}/>
             </div>
 
             <div className="w-[45%] h-full flex ms-20 relative">
