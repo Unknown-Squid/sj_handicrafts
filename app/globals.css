@@ -72,7 +72,7 @@
 /* Urbanist Font */
 @font-face { 
   font-family: 'Urbanist Semi Bold';
-  src: url('fonts/Urbanist/Static/Urbanist-SemiBold.ttf') format('truetype');
+  src: url('fonts/Urbanist/static/Urbanist-SemiBold.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
