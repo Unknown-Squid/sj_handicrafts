@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, useRef, MutableRefObject } from 'react';
+import { useState, useEffect, useRef, MutableRefObject } from "react";
 
 export const useInView = <T extends HTMLElement>(
   options?: IntersectionObserverInit
@@ -8,6 +8,11 @@ export const useInView = <T extends HTMLElement>(
   const ref = useRef<T | null>(null); // Generic ref
 
   useEffect(() => {
+    // Ensure IntersectionObserver runs only in the browser
+    if (typeof window === "undefined" || !("IntersectionObserver" in window)) {
+      return;
+    }
+
     const observer = new IntersectionObserver(
       ([entry]) => setIsVisible(entry.isIntersecting),
       options
