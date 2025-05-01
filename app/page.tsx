@@ -57,11 +57,11 @@ export default function Home() {
   return (
     <div className="bg-transparent h-700px w-full flex flex-col z-10 overflow-auto scroll-bar">
 
-    <div className="w-full h-fit bg-black/[.55]">
+     <div className="w-full h-fit bg-black/[.55]">
         <Header />
 
         {/* Page Hero Display */}
-        <div className="w-full h-[660px] flex">
+        <div className="w-full h-screen flex">
           <div className="bg-transparent w-[42%] h-full flex justify-end relative mt-2 animate-slideInTop">
             <Image
               src={heroLogo}
@@ -72,13 +72,14 @@ export default function Home() {
             />
           </div>
 
-          <div className="bg-transparent w-[58%] h-full flex items-center mt-2">
-            <h1 className="text-[#FFE4CC] w-[80%] text-[35px] ms-24 leading-[1.2] font-krono mb-20 animate-fadeIn">
+          <div className="bg-transparent w-[58%] h-full flex mt-64">
+            <h1 className="text-[#FFE4CC] w-[80%] text-[65px] ms-24 leading-[1.2] font-krono mb-20 animate-fadeIn">
               Creativity Crafted by the Community
             </h1>
           </div>
         </div>
       </div>
+
 
       {/* Page About Us Display */}
       <div className="w-full h-fit bg-[#FFE4CC]">
