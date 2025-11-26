@@ -6,6 +6,22 @@ import Header from "./components/header/header";
 import Footer from "./components/footer/footer";
 import { useInView } from "./hooks/useInView";
 import { useState, useEffect } from "react";
+import Link from "next/link";
+
+// Handicrafts images from public folder
+const handicraftImages = [
+  "/products/products.png",
+  "/products/products2.jpg",
+  "/products/products3.jpg",
+  "/products/products4.jpg",
+  "/products/baskets/basket1.jpg",
+];
+
+const visionImage = "/products/baskets/basket2.jpg";
+const missionImage = "/products/placemats/placemat1.jpg";
+const excellenceImage = "/products/placemats/placemat2.jpg";
+const qualityImage = "/products/baskets/basket1.jpg";
+const socialResponsibilityImage = "/products/placemats/placemat3.jpg";
 
 export default function Home() {
   const [aboutRef, aboutVisible] = useInView<HTMLDivElement>({ threshold: 0.1 });
@@ -16,20 +32,21 @@ export default function Home() {
   const [productRef, productVisible] = useInView<HTMLDivElement>({ threshold: 0.1 });
 
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [carouselImage] = useState([
-    "image1",
-    "image1",
-    "image1",
-    "image1",
-    "image1"
-  ]);
+  const [carouselImage] = useState(handicraftImages);
+  const [isCarouselTransitioning, setIsCarouselTransitioning] = useState(false);
 
   const prevSlide = () => {
+    if (isCarouselTransitioning) return;
+    setIsCarouselTransitioning(true);
     setCurrentIndex((prev) => (prev === 0 ? carouselImage.length - 1 : prev - 1));
+    setTimeout(() => setIsCarouselTransitioning(false), 800);
   };
   
   const nextSlide = () => {
+    if (isCarouselTransitioning) return;
+    setIsCarouselTransitioning(true);
     setCurrentIndex((prev) => (prev === carouselImage.length - 1 ? 0 : prev + 1));
+    setTimeout(() => setIsCarouselTransitioning(false), 800);
   };
 
   const [animatedSections, setAnimatedSections] = useState({
@@ -93,7 +110,9 @@ export default function Home() {
               width={500}
               height={500}
               alt="background"
-              className="mt-30 w-full h-[90%] mt-16 ms-10"
+              className={`mt-30 w-full h-[90%] mt-16 ms-10 transition-transform duration-500 hover:scale-105 ${
+                animatedSections.about ? "animate-zoomIn" : ""
+              }`}
             />
           </div>
 
@@ -113,7 +132,11 @@ export default function Home() {
               Home of Handmade Crafts which is carefully meaningfully curated by our local artisans
             </p>
 
-            <button className="btn cube cube-hover w-[40%]" type="button">
+            <Link 
+              href="/about-us"
+              className={`btn cube cube-hover w-[40%] ${animatedSections.about ? "animate-zoomIn" : "opacity-0"}`}
+              style={{ animationDelay: "0.6s" }}
+            >
               <div className="bg-top">
                 <div className="bg-inner"></div>
               </div>
@@ -124,7 +147,7 @@ export default function Home() {
                 <div className="bg-inner"></div>
               </div>
               <div className="text">Explore More</div>
-            </button>
+            </Link>
           </div>
         </div>
       </div>
@@ -148,7 +171,16 @@ export default function Home() {
               style={{ animationDelay: "0.3s" }}
             >
               <h2 className="text-xl text-center mt-10 font-poppinsBold">Excellence</h2>
-              <div className="bg-white h-[150px] w-[80%] rounded-[10px]"></div>
+              <div className="bg-white h-[150px] w-[80%] rounded-[10px] overflow-hidden transition-transform duration-300 hover:scale-105">
+                <Image 
+                  src={excellenceImage}
+                  alt="Excellence in handicrafts"
+                  width={400}
+                  height={300}
+                  className="w-full h-full object-cover transition-transform duration-300"
+                  unoptimized
+                />
+              </div>
               <p className="text-lg text-justify w-[80%] mt-5 font-poppinsMedium">
                 Our local artisans pride themselves in their artisanship skills
               </p>
@@ -162,7 +194,16 @@ export default function Home() {
               style={{ animationDelay: "0.6s" }}
             >
               <h2 className="text-xl text-center mt-10 font-poppinsBold">Quality</h2>
-              <div className="bg-white h-[150px] w-[80%] rounded-[10px]"></div>
+              <div className="bg-white h-[150px] w-[80%] rounded-[10px] overflow-hidden transition-transform duration-300 hover:scale-105">
+                <Image 
+                  src={qualityImage}
+                  alt="Quality handicrafts"
+                  width={400}
+                  height={300}
+                  className="w-full h-full object-cover transition-transform duration-300"
+                  unoptimized
+                />
+              </div>
               <p className="text-lg text-justify w-[80%] mt-5 font-poppinsMedium">
                 Our handmade products are of the highest quality
               </p>
@@ -176,7 +217,16 @@ export default function Home() {
               style={{ animationDelay: "0.9s" }}
             >
               <h2 className="text-xl text-center mt-10 font-poppinsBold">Social Responsibility</h2>
-              <div className="bg-white h-[150px] w-[80%] rounded-[10px]"></div>
+              <div className="bg-white h-[150px] w-[80%] rounded-[10px] overflow-hidden transition-transform duration-300 hover:scale-105">
+                <Image 
+                  src={socialResponsibilityImage}
+                  alt="Social responsibility in handicrafts"
+                  width={400}
+                  height={300}
+                  className="w-full h-full object-cover transition-transform duration-300"
+                  unoptimized
+                />
+              </div>
               <p className="text-lg text-justify w-[80%] mt-5 font-poppinsMedium">
                 Our commitment is to our society and community
               </p>
@@ -212,8 +262,19 @@ export default function Home() {
 
               <div className="w-1/2 h-full flex items-center justify-center mt-10">
 
-                <div className="bg-black h-[90%] w-[90%]">
-
+                <div className={`bg-black h-[90%] w-[90%] rounded-lg overflow-hidden opacity-0 ${
+                  animatedSections.missionVision ? "animate-zoomIn" : ""
+                }`}
+                style={{ animationDelay: "0.3s" }}
+                >
+                  <Image 
+                    src={visionImage}
+                    alt="Vision for handicrafts"
+                    width={800}
+                    height={600}
+                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                    unoptimized
+                  />
                 </div>
 
               </div>
@@ -224,8 +285,19 @@ export default function Home() {
 
               <div className="w-1/2 h-full flex items-center justify-center">
 
-                <div className="bg-black h-[90%] w-[90%]">
-
+                <div className={`bg-black h-[90%] w-[90%] rounded-lg overflow-hidden opacity-0 ${
+                  animatedSections.missionVision ? "animate-zoomIn" : ""
+                }`}
+                style={{ animationDelay: "0.3s" }}
+                >
+                  <Image 
+                    src={missionImage}
+                    alt="Mission for handicrafts"
+                    width={800}
+                    height={600}
+                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                    unoptimized
+                  />
                 </div>
 
               </div>
@@ -277,7 +349,11 @@ export default function Home() {
               Home of Handmade Crafts which is carefully meaningfully curated by our local artisans
             </p>
 
-            <button className="btn cube cube-hover mt-12" type="button">
+            <Link 
+              href="/our-products"
+              className={`btn cube cube-hover mt-12 ${animatedSections.product ? "animate-zoomIn" : "opacity-0"}`}
+              style={{ animationDelay: "0.5s" }}
+            >
               <div className="bg-top">
                 <div className="bg-inner"></div>
               </div>
@@ -288,7 +364,7 @@ export default function Home() {
                 <div className="bg-inner"></div>
               </div>
               <div className="text">View Product</div>
-            </button>
+            </Link>
           </div>
 
           <div 
@@ -297,31 +373,50 @@ export default function Home() {
 
               {carouselImage ? carouselImage.map((item, index) => {
                   return <div 
-                          key={index}
-                          className={`relative w-[70%] h-[70%] bg-black opacity-0 ${index === currentIndex ? "flex" : "hidden"} ${
-                            animatedSections.product ? "fade-in-left" : ""
+                          key={`${item}-${currentIndex}-${index}`}
+                          className={`relative w-[70%] h-[70%] bg-black transition-all duration-800 ${
+                            index === currentIndex 
+                              ? "flex opacity-100 animate-carouselFade" 
+                              : "hidden opacity-0"
                           }`}
                           >
-                            <div className="absolute bottom-[-5%] left-[-30%] w-[200px] h-[200px] bg-white">
+                            <Image 
+                              alt={`handicraft product ${index + 1}`}
+                              src={item}
+                              width={800}
+                              height={600}
+                              className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                              unoptimized
+                            />
+                            <div className="absolute bottom-[-5%] left-[-30%] w-[200px] h-[200px] bg-white rounded-lg overflow-hidden shadow-lg transition-transform duration-300 hover:scale-110 animate-float">
                               <Image 
-                                alt={`image ${index}`}
-                                src={""}
-                                width={500}
-                                height={500}
-                                />
-
+                                alt={`handicraft product ${index + 1} preview`}
+                                src={item}
+                                width={200}
+                                height={200}
+                                className="w-full h-full object-cover"
+                                unoptimized
+                              />
                             </div> 
                         </div> }) : null
               }
 
             <div className="w-full  h-auto flex flex-row absolute top-[40%] left-[6%] justify-between">
-              <button type="button" className="h-auto w-auto rounded-full bg-black/[.5] p-1" onClick={prevSlide}>
+              <button 
+                type="button" 
+                className="h-auto w-auto rounded-full bg-black/[.5] p-1 transition-all duration-300 hover:bg-black/[.8] hover:scale-110 active:scale-95" 
+                onClick={prevSlide}
+              >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M15 4.5L7.5 12L15 19.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </button>
 
-              <button type="button" className="h-auto w-auto rounded-full bg-black/[.5] p-1" onClick={nextSlide}>
+              <button 
+                type="button" 
+                className="h-auto w-auto rounded-full bg-black/[.5] p-1 transition-all duration-300 hover:bg-black/[.8] hover:scale-110 active:scale-95" 
+                onClick={nextSlide}
+              >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M9 4.5L16.5 12L9 19.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
