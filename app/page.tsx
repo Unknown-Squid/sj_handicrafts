@@ -1,7 +1,6 @@
 "use client";
 import Image from "next/image";
 import heroLogo from '../public/logos/sj handicrafts hero logo.png';
-import aboutUsImage from '../public/about us image.png';
 import Header from "./components/header/header";
 import Footer from "./components/footer/footer";
 import { useInView } from "./hooks/useInView";
@@ -10,18 +9,27 @@ import Link from "next/link";
 
 // Handicrafts images from public folder
 const handicraftImages = [
-  "/products/products.png",
-  "/products/products2.jpg",
-  "/products/products3.jpg",
-  "/products/products4.jpg",
-  "/products/baskets/basket1.jpg",
+  "/images/about_us_image_1.jpg",
+  "/images/about_us_image_2.jpg",
+  "/images/about_us_image_3.jpg",
+  "/images/about_us_image_4.jpg",
+  "/images/about_us_image_5.jpg",
 ];
 
-const visionImage = "/products/baskets/basket2.jpg";
-const missionImage = "/products/placemats/placemat1.jpg";
-const excellenceImage = "/products/placemats/placemat2.jpg";
-const qualityImage = "/products/baskets/basket1.jpg";
-const socialResponsibilityImage = "/products/placemats/placemat3.jpg";
+// Handicrafts images from public folder
+const productImages = [
+  "/products/baskets/basket1.jpg",
+  "/products/baskets/basket2.jpg",
+  "/products/placemats/placemat1.jpg",
+  "/products/placemats/placemat2.jpg",
+  "/products/placemats/placemat3.jpg",
+];
+
+const visionImage = "/images/vision_image.jpg";
+const missionImage = "/images/mission_image.jpg";
+const excellenceImage = "/images/excellence_image.jpg";
+const qualityImage = "/images/quality_image.jpg";
+const socialResponsibilityImage = "/images/social_responsibility_image.jpg";
 
 export default function Home() {
   const [aboutRef, aboutVisible] = useInView<HTMLDivElement>({ threshold: 0.1 });
@@ -32,8 +40,13 @@ export default function Home() {
   const [productRef, productVisible] = useInView<HTMLDivElement>({ threshold: 0.1 });
 
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [carouselImage] = useState(handicraftImages);
+  const [carouselImage] = useState(productImages);
   const [isCarouselTransitioning, setIsCarouselTransitioning] = useState(false);
+
+  const [aboutImageIndex, setAboutImageIndex] = useState(0);
+  const [isAboutImageTransitioning, setIsAboutImageTransitioning] = useState(false);
+  const [aboutImageDirection, setAboutImageDirection] = useState<'left' | 'right'>('right');
+  const aboutImages = [handicraftImages[0], handicraftImages[1], handicraftImages[2], handicraftImages[3], handicraftImages[4]];
 
   const prevSlide = () => {
     if (isCarouselTransitioning) return;
@@ -47,6 +60,22 @@ export default function Home() {
     setIsCarouselTransitioning(true);
     setCurrentIndex((prev) => (prev === carouselImage.length - 1 ? 0 : prev + 1));
     setTimeout(() => setIsCarouselTransitioning(false), 800);
+  };
+
+  const prevAboutImage = () => {
+    if (isAboutImageTransitioning) return;
+    setIsAboutImageTransitioning(true);
+    setAboutImageDirection('left');
+    setAboutImageIndex((prev) => (prev === 0 ? aboutImages.length - 1 : prev - 1));
+    setTimeout(() => setIsAboutImageTransitioning(false), 800);
+  };
+
+  const nextAboutImage = () => {
+    if (isAboutImageTransitioning) return;
+    setIsAboutImageTransitioning(true);
+    setAboutImageDirection('right');
+    setAboutImageIndex((prev) => (prev === aboutImages.length - 1 ? 0 : prev + 1));
+    setTimeout(() => setIsAboutImageTransitioning(false), 800);
   };
 
   const [animatedSections, setAnimatedSections] = useState({
@@ -79,19 +108,26 @@ export default function Home() {
 
         {/* Page Hero Display */}
         <div className="w-full h-screen flex">
-          <div className="bg-transparent w-[42%] h-full flex justify-end relative mt-2 animate-slideInTop">
-            <Image
-              src={heroLogo}
-              width={500}
-              height={500}
-              alt="background"
-              className="w-[96%] h-[86%] absolute top-0 left-[15%]"
-            />
+          <div className="bg-transparent w-[42%] h-full flex justify-end relative mt-2">
+            <div className="w-[96%] h-[86%] absolute top-0 left-[15%] opacity-0 animate-zoomIn" style={{ animationDelay: "0.2s" }}>
+              <Image
+                src={heroLogo}
+                width={500}
+                height={500}
+                alt="background"
+                className="w-full h-full animate-float"
+                style={{ animationDelay: "1.8s" }}
+              />
+            </div>
           </div>
 
           <div className="bg-transparent w-[58%] h-full flex mt-64">
-            <h1 className="text-[#FFE4CC] w-[80%] text-[65px] ms-24 leading-[1.2] font-krono mb-20 animate-fadeIn">
-              Creativity Crafted by the Community
+            <h1 className="text-[#FFE4CC] w-[80%] text-[65px] ms-24 leading-[1.2] font-krono mb-20 animate-slideInLeft animate-glow" style={{ animationDelay: "0.5s" }}>
+              <span className="inline-block opacity-0 animate-textReveal" style={{ animationDelay: "0.8s" }}>Creativity</span>{" "}
+              <span className="inline-block opacity-0 animate-textReveal" style={{ animationDelay: "1.0s" }}>Crafted</span>{" "}
+              <span className="inline-block opacity-0 animate-textReveal" style={{ animationDelay: "1.2s" }}>by</span>{" "}
+              <span className="inline-block opacity-0 animate-textReveal" style={{ animationDelay: "1.4s" }}>the</span>{" "}
+              <span className="inline-block opacity-0 animate-textReveal" style={{ animationDelay: "1.6s" }}>Community</span>
             </h1>
           </div>
         </div>
@@ -99,26 +135,112 @@ export default function Home() {
 
 
       {/* Page About Us Display */}
-      <div className="w-full h-fit bg-[#FFE4CC]">
-        <div className="w-full h-[650px] bg-transparent flex flex-row">
+      <div className="w-full h-fit vh bg-[#FFE4CC] flex justify-center">
+        <div className="w-[80%] h-[1200px] bg-transparent flex flex-row items-center">
+
           <div
             ref={aboutRef}
-            className={`w-[45%] h-full ${animatedSections.about ? "animate-fadeIn" : ""}`}
+            className={`w-[45%] h-full flex items-center relative ${animatedSections.about ? "animate-fadeIn" : ""}`}
           >
-            <Image
-              src={aboutUsImage}
-              width={500}
-              height={500}
-              alt="background"
-              className={`mt-30 w-full h-[90%] mt-16 ms-10 transition-transform duration-500 hover:scale-105 ${
-                animatedSections.about ? "animate-zoomIn" : ""
-              }`}
-            />
+            
+            {/* Image Carousel - Domino Flow */}
+            <div className="relative w-full h-fit flex items-center justify-center px-4">
+
+              <div 
+                className="flex items-center gap-4 transition-transform duration-800 ease-out"
+                style={{
+                  transform: `translateX(calc(50% - 150px - ${aboutImageIndex * 184}px))`
+                }}
+              >
+                {aboutImages.map((img, index) => {
+                  const isActive = index === aboutImageIndex;
+                  const offset = index - aboutImageIndex;
+                  
+                  return (
+                    <div
+                      key={index}
+                      className={`flex-shrink-0 transition-all duration-500 relative ${
+                        isActive ? 'scale-100 z-10 opacity-100' : 'scale-75 opacity-25 z-0'
+                      }`}
+                      style={{
+                        width: '180px',
+                        height: '440px',
+                        marginLeft: offset === 0 ? '0' : offset > 0 ? '-20px' : '20px'
+                      }}
+                    >
+                      <Image
+                        src={img}
+                        width={500}
+                        height={500}
+                        alt={`About us image ${index + 1}`}
+                        className={`w-full h-full object-cover rounded-lg shadow-lg transition-all duration-500 ${
+                          isActive ? "ring-4 ring-[#65482C] shadow-2xl brightness-100" : "brightness-75"
+                        }`}
+                        unoptimized={typeof img === 'string'}
+                      />
+                      {isActive && (
+                        <div className="absolute inset-0 border-4 border-[#65482C] rounded-lg pointer-events-none" />
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Navigation Buttons */}
+              <button 
+                type="button" 
+                className="absolute left-2 top-1/2 -translate-y-1/2 z-20 h-10 w-10 rounded-full bg-[#65482C]/80 hover:bg-[#65482C] text-white transition-all duration-300 hover:scale-110 active:scale-95 flex items-center justify-center shadow-lg"
+                onClick={prevAboutImage}
+                disabled={isAboutImageTransitioning}
+                aria-label="Previous image"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M15 4.5L7.5 12L15 19.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </button>
+
+              <button 
+                type="button" 
+                className="absolute right-2 top-1/2 -translate-y-1/2 z-20 h-10 w-10 rounded-full bg-[#65482C]/80 hover:bg-[#65482C] text-white transition-all duration-300 hover:scale-110 active:scale-95 flex items-center justify-center shadow-lg"
+                onClick={nextAboutImage}
+                disabled={isAboutImageTransitioning}
+                aria-label="Next image"
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M9 4.5L16.5 12L9 19.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </button>
+
+              {/* Image Indicators */}
+              <div className="absolute bottom-[-40px] left-1/2 -translate-x-1/2 z-20 flex gap-2">
+                {aboutImages.map((_, index) => (
+                  <button
+                    key={index}
+                    type="button"
+                    className={`h-2 rounded-full transition-all duration-300 ${
+                      index === aboutImageIndex 
+                        ? "w-6 bg-[#65482C]" 
+                        : "w-2 bg-[#65482C]/40 hover:bg-[#65482C]/60"
+                    }`}
+                    onClick={() => {
+                      if (!isAboutImageTransitioning && index !== aboutImageIndex) {
+                        setIsAboutImageTransitioning(true);
+                        setAboutImageDirection(index > aboutImageIndex ? 'right' : 'left');
+                        setAboutImageIndex(index);
+                        setTimeout(() => setIsAboutImageTransitioning(false), 800);
+                      }
+                    }}
+                    aria-label={`Go to image ${index + 1}`}
+                  />
+                ))}
+              </div>
+            </div>
+
           </div>
 
-          <div className="w-[55%] h-full flex flex-col ps-10 gap-20 items-center">
+          <div className="w-[55%] h-full flex flex-col gap-20 items-center justify-center ml-10">
             <h1
-              className={`text-4xl text-[#65482C] w-[60%] text-center mt-48 font-poppinsSemiBoldItalic ${
+              className={`text-4xl text-[#65482C] w-[60%] text-center font-poppinsSemiBoldItalic ${
                 animatedSections.about ? "animate-slideInTop" : ""
               }`}
             >
@@ -149,34 +271,38 @@ export default function Home() {
               <div className="text">Explore More</div>
             </Link>
           </div>
+
         </div>
       </div>
 
       {/* Core Values Section */}
-      <div className="w-full h-fit bg-[#FFE4CC]">
-        <div className="w-full h-[700px] bg-transparent flex flex-col items-center">
+      <div className="w-full h-fit bg-black/[.55] flex justify-center">
+        <div className="w-[80%] h-[1200px] flex flex-col items-center justify-center">
+
           <h1 
           ref={coreValuesRef}
-          className={`text-4xl text-[#65482C] text-center mt-20 font-poppinsSemiBoldItalic opacity-0 ${
+          className={`text-4xl text-[#FFE4CC] text-center font-poppinsSemiBoldItalic opacity-0 ${
                 animatedSections.coreValues ? "animate-slideInTop" : ""
               }`}>
             Core Values
           </h1>
-          <div className="w-[80%] h-fit flex flex-row gap-20 mt-20">
+          
+          <div className="w-full h-fit flex flex-row gap-20 mt-20">
+
             <div
               ref={coreValuesRef}
-              className={`flex-1 flex flex-col items-center h-[400px] rounded-[20px] bg-[#AD9073] gap-5 opacity-0 ${
+              className={`flex-1 flex flex-col items-center h-[600px] rounded-[20px] bg-[#AD9073] gap-5 opacity-0 ${
                 animatedSections.coreValues ? "fade-in-left" : ""
               }`}
               style={{ animationDelay: "0.3s" }}
             >
-              <h2 className="text-xl text-center mt-10 font-poppinsBold">Excellence</h2>
-              <div className="bg-white h-[150px] w-[80%] rounded-[10px] overflow-hidden transition-transform duration-300 hover:scale-105">
+              <h2 className="text-xl text-center font-poppinsBold mt-10">Excellence</h2>
+              <div className="bg-white h-[350px] w-[80%] rounded-[10px] overflow-hidden transition-transform duration-300 hover:scale-105">
                 <Image 
                   src={excellenceImage}
                   alt="Excellence in handicrafts"
-                  width={400}
-                  height={300}
+                  width={700}
+                  height={700}
                   className="w-full h-full object-cover transition-transform duration-300"
                   unoptimized
                 />
@@ -188,18 +314,18 @@ export default function Home() {
 
             <div
               ref={qualityRef}
-              className={`flex-1 flex flex-col items-center h-[400px] rounded-[20px] bg-[#AD9073] gap-5 opacity-0 ${
+              className={`flex-1 flex flex-col items-center h-[600px] rounded-[20px] bg-[#AD9073] gap-5 opacity-0 ${
                 animatedSections.quality ? "fade-in-left" : ""
               }`}
               style={{ animationDelay: "0.6s" }}
             >
               <h2 className="text-xl text-center mt-10 font-poppinsBold">Quality</h2>
-              <div className="bg-white h-[150px] w-[80%] rounded-[10px] overflow-hidden transition-transform duration-300 hover:scale-105">
+              <div className="bg-white h-[350px] w-[80%] rounded-[10px] overflow-hidden transition-transform duration-300 hover:scale-105">
                 <Image 
                   src={qualityImage}
                   alt="Quality handicrafts"
-                  width={400}
-                  height={300}
+                  width={700}
+                  height={700}
                   className="w-full h-full object-cover transition-transform duration-300"
                   unoptimized
                 />
@@ -211,18 +337,18 @@ export default function Home() {
 
             <div
               ref={socialResponsibilityRef}
-              className={`flex-1 flex flex-col items-center h-[400px] rounded-[20px] bg-[#AD9073] gap-5 opacity-0 ${
+              className={`flex-1 flex flex-col items-center h-[600px] rounded-[20px] bg-[#AD9073] gap-5 opacity-0 ${
                 animatedSections.socialResponsibility ? "fade-in-left" : ""
               }`}
               style={{ animationDelay: "0.9s" }}
             >
               <h2 className="text-xl text-center mt-10 font-poppinsBold">Social Responsibility</h2>
-              <div className="bg-white h-[150px] w-[80%] rounded-[10px] overflow-hidden transition-transform duration-300 hover:scale-105">
+              <div className="bg-white h-[350px] w-[80%] rounded-[10px] overflow-hidden transition-transform duration-300 hover:scale-105">
                 <Image 
                   src={socialResponsibilityImage}
                   alt="Social responsibility in handicrafts"
-                  width={400}
-                  height={300}
+                  width={700}
+                  height={700}
                   className="w-full h-full object-cover transition-transform duration-300"
                   unoptimized
                 />
@@ -231,47 +357,53 @@ export default function Home() {
                 Our commitment is to our society and community
               </p>
             </div>
+
           </div>
+
         </div>
       </div>
 
 
-      <div className="w-full h-fit bg-black/[.55]">
+      <div className="w-full h-fit bg-[#FFE4CC]">
 
-        <div className="w-full h-[700px] bg-transparent flex flex-col items-center">
+        <div className="w-full h-[1200px] bg-transparent flex flex-col items-center">
 
-            <div className="flex flex-row w-full h-1/2">
+            <div className="flex flex-row w-[80%] h-[40%]">
 
               <div 
                 ref={missionVisionRef}
                 className="w-1/2 h-full flex flex-col items-center justify-center gap-10">
 
-                <h1 
-                  className={`text-2xl text-[#FFE4CC] ${animatedSections.missionVision ? "animate-slideInTop" : ""} opacity-0`}
+                <h1
+                  className={`text-4xl text-[#65482C] w-[60%] text-center font-poppinsSemiBoldItalic ${
+                    animatedSections.missionVision ? "animate-slideInTop" : ""
+                  }`}
                 >
-                  Vision
+                  Mission
                 </h1>
-                <p 
-                  className={`w-[90%] text-xl text-justify leading-[2] text-[#FFE4CC] ${animatedSections.missionVision ? "animate-slideInBottom" : ""} opacity-0`}
+                <p
+                  className={`text-2xl text-justify text-black w-[80%] font-poppinsMedium ${
+                    animatedSections.missionVision ? "animate-slideInBottom" : ""
+                  }`}
                 >
-                  To be recognize globally as one of the producers of high-quality handicrafts and to be known as 
-                  a market-driven company that focuses on excellence , quality and reliability
+                  To promote quality handmade products and improve 
+                  the living standards of local artisans
                 </p>
 
               </div>
 
               <div className="w-1/2 h-full flex items-center justify-center mt-10">
 
-                <div className={`bg-black h-[90%] w-[90%] rounded-lg overflow-hidden opacity-0 ${
+                <div className={`bg-black h-[70%] w-[80%] rounded-lg overflow-hidden opacity-0 ${
                   animatedSections.missionVision ? "animate-zoomIn" : ""
                 }`}
                 style={{ animationDelay: "0.3s" }}
                 >
                   <Image 
-                    src={visionImage}
+                    src={missionImage}
                     alt="Vision for handicrafts"
-                    width={800}
-                    height={600}
+                    width={1000}
+                    height={1000}
                     className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                     unoptimized
                   />
@@ -281,20 +413,20 @@ export default function Home() {
 
             </div>
 
-            <div className="flex flex-row w-full h-1/2">
+            <div className="flex flex-row w-[80%] h-[40%]">
 
               <div className="w-1/2 h-full flex items-center justify-center">
 
-                <div className={`bg-black h-[90%] w-[90%] rounded-lg overflow-hidden opacity-0 ${
+                <div className={`bg-black h-[70%] w-[80%] rounded-lg overflow-hidden opacity-0 ${
                   animatedSections.missionVision ? "animate-zoomIn" : ""
                 }`}
                 style={{ animationDelay: "0.3s" }}
                 >
                   <Image 
-                    src={missionImage}
+                    src={visionImage}
                     alt="Mission for handicrafts"
-                    width={800}
-                    height={600}
+                    width={1000}
+                    height={1000}
                     className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                     unoptimized
                   />
@@ -306,14 +438,21 @@ export default function Home() {
               ref={missionVisionRef}
               className="w-1/2 h-full flex flex-col items-center justify-center gap-10">
 
-                <h1 
-                  className={`text-2xl text-[#FFE4CC] ${animatedSections.missionVision ? "animate-slideInTop" : ""} opacity-0`}
+
+                <h1
+                  className={`text-4xl text-[#65482C] w-[60%] text-center font-poppinsSemiBoldItalic ${
+                    animatedSections.missionVision ? "animate-slideInTop" : ""
+                  }`}
                 >
-                  Mission</h1>
-                <p 
-                  className={`w-[90%] text-xl text-justify leading-[2] text-[#FFE4CC] ${animatedSections.missionVision ? "animate-slideInBottom" : ""} opacity-0`}
+                  Vision
+                </h1>
+                <p
+                  className={`text-2xl text-justify text-black w-[80%] font-poppinsMedium ${
+                    animatedSections.missionVision ? "animate-slideInBottom" : ""
+                  }`}
                 >
-                  To promote quality handmade products and improve the living standards of local artisans
+                  To be recognize globally as one of the producers of high-quality handicrafts and to be known as 
+                  a market-driven company that focuses on excellence , quality and reliability
                 </p>
 
               </div>
@@ -326,103 +465,105 @@ export default function Home() {
       </div>
 
       {/* Page Our Product Display  */}
-      <div className="w-full h-fit bg-[#FFE4CC]">
+      <div className="w-full h-fit bg-black/[.30] flex justify-center">
+        <div className="w-[80%] h-full">
 
-        <h1 
+          <h1 
           ref={productRef}
-          className={`text-4xl text-[#65482C] w-full text-center  font-poppinsSemiBoldItalic mt-20 opacity-0 ${
-            animatedSections.product ? "animate-slideInTop" : ""
-          }`}
-        >
-          Our Products
-        </h1>
+          className={`text-4xl text-[#FFE4CC] text-center font-poppinsSemiBoldItalic mt-20 opacity-0 ${
+                animatedSections.product ? "animate-slideInTop" : ""
+              }`}>
+            Our Products
+          </h1>
 
-        <div className="w-full h-[700px] bg-transparent flex flex-row mt-10">
+          <div className="w-full h-[700px] bg-transparent flex flex-row mt-10">
 
-          <div 
-            ref={productRef}
-            className="w-1/2 h-full flex flex-col gap-20 items-center mt-24"
-          >
-            <p 
-              className={`text-xl text-black w-[90%] font-poppinsMedium text-center ${animatedSections.product ? "animate-slideInBottom" : ""} opacity-0`}
+            <div 
+              ref={productRef}
+              className="w-1/2 h-full flex flex-col gap-20 items-center mt-24"
             >
-              Home of Handmade Crafts which is carefully meaningfully curated by our local artisans
-            </p>
+              <p 
+                className={`text-[42px] text-justify text-[#FFE4CC] w-[90%] font-poppinsMedium text-center ${animatedSections.product ? "animate-slideInBottom" : ""} opacity-0`}
+              >
+                Home of Handmade Crafts which is carefully meaningfully curated by our local artisans
+              </p>
 
-            <Link 
-              href="/our-products"
-              className={`btn cube cube-hover mt-12 ${animatedSections.product ? "animate-zoomIn" : "opacity-0"}`}
-              style={{ animationDelay: "0.5s" }}
-            >
-              <div className="bg-top">
-                <div className="bg-inner"></div>
-              </div>
-              <div className="bg-right">
-                <div className="bg-inner"></div>
-              </div>
-              <div className="bg">
-                <div className="bg-inner"></div>
-              </div>
-              <div className="text">View Product</div>
-            </Link>
-          </div>
+              <Link 
+                href="/our-products"
+                className={`btn cube cube-hover mt-12 ${animatedSections.product ? "animate-zoomIn" : "opacity-0"}`}
+                style={{ animationDelay: "0.5s" }}
+              >
+                <div className="bg-top">
+                  <div className="bg-inner"></div>
+                </div>
+                <div className="bg-right">
+                  <div className="bg-inner"></div>
+                </div>
+                <div className="bg">
+                  <div className="bg-inner"></div>
+                </div>
+                <div className="text">View Product</div>
+              </Link>
+            </div>
 
-          <div 
-            ref={productRef}
-            className="w-1/2 h-full flex flex-col ps-10 gap-20 items-end me-32 relative">
+            <div 
+              ref={productRef}
+              className="w-1/2 h-full flex flex-col ps-10 gap-20 items-end me-32 relative">
 
-              {carouselImage ? carouselImage.map((item, index) => {
-                  return <div 
-                          key={`${item}-${currentIndex}-${index}`}
-                          className={`relative w-[70%] h-[70%] bg-black transition-all duration-800 ${
-                            index === currentIndex 
-                              ? "flex opacity-100 animate-carouselFade" 
-                              : "hidden opacity-0"
-                          }`}
-                          >
-                            <Image 
-                              alt={`handicraft product ${index + 1}`}
-                              src={item}
-                              width={800}
-                              height={600}
-                              className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                              unoptimized
-                            />
-                            <div className="absolute bottom-[-5%] left-[-30%] w-[200px] h-[200px] bg-white rounded-lg overflow-hidden shadow-lg transition-transform duration-300 hover:scale-110 animate-float">
+                {carouselImage ? carouselImage.map((item, index) => {
+                    return <div 
+                            key={`${item}-${currentIndex}-${index}`}
+                            className={`relative w-[70%] h-[70%] bg-black transition-all duration-800 ${
+                              index === currentIndex 
+                                ? "flex opacity-100 animate-carouselFade" 
+                                : "hidden opacity-0"
+                            }`}
+                            >
                               <Image 
-                                alt={`handicraft product ${index + 1} preview`}
+                                alt={`handicraft product ${index + 1}`}
                                 src={item}
-                                width={200}
-                                height={200}
-                                className="w-full h-full object-cover"
+                                width={800}
+                                height={600}
+                                className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                                 unoptimized
                               />
-                            </div> 
-                        </div> }) : null
-              }
+                              <div className="absolute bottom-[-5%] left-[-30%] w-[200px] h-[200px] bg-white rounded-lg overflow-hidden shadow-lg transition-transform duration-300 hover:scale-110 animate-float">
+                                <Image 
+                                  alt={`handicraft product ${index + 1} preview`}
+                                  src={item}
+                                  width={200}
+                                  height={200}
+                                  className="w-full h-full object-cover"
+                                  unoptimized
+                                />
+                              </div> 
+                          </div> }) : null
+                }
 
-            <div className="w-full  h-auto flex flex-row absolute top-[40%] left-[6%] justify-between">
-              <button 
-                type="button" 
-                className="h-auto w-auto rounded-full bg-black/[.5] p-1 transition-all duration-300 hover:bg-black/[.8] hover:scale-110 active:scale-95" 
-                onClick={prevSlide}
-              >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M15 4.5L7.5 12L15 19.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </button>
+              <div className="w-full  h-auto flex flex-row absolute top-[40%] left-[6%] justify-between">
+                <button 
+                  type="button" 
+                  className="h-auto w-auto rounded-full bg-black/[.5] p-1 transition-all duration-300 hover:bg-black/[.8] hover:scale-110 active:scale-95" 
+                  onClick={prevSlide}
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M15 4.5L7.5 12L15 19.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </button>
 
-              <button 
-                type="button" 
-                className="h-auto w-auto rounded-full bg-black/[.5] p-1 transition-all duration-300 hover:bg-black/[.8] hover:scale-110 active:scale-95" 
-                onClick={nextSlide}
-              >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M9 4.5L16.5 12L9 19.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </button>
+                <button 
+                  type="button" 
+                  className="h-auto w-auto rounded-full bg-black/[.5] p-1 transition-all duration-300 hover:bg-black/[.8] hover:scale-110 active:scale-95" 
+                  onClick={nextSlide}
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9 4.5L16.5 12L9 19.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </button>
+              </div>
+                
             </div>
-              
+
           </div>
 
         </div>
