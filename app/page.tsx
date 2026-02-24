@@ -189,25 +189,25 @@ export default function Home() {
               {/* Navigation Buttons */}
               <button 
                 type="button" 
-                className="absolute left-2 top-1/2 -translate-y-1/2 z-20 h-10 w-10 rounded-full bg-[#65482C]/80 hover:bg-[#65482C] text-white transition-all duration-300 hover:scale-110 active:scale-95 flex items-center justify-center shadow-lg"
+                className="absolute left-2 top-1/2 -translate-y-1/2 z-20 h-12 w-12 rounded-lg bg-[#65482C] hover:bg-[#8B6F47] text-[#FFE4CC] transition-all duration-300 hover:scale-110 active:scale-95 flex items-center justify-center shadow-lg border-2 border-[#AD9073]/50 hover:border-[#AD9073]"
                 onClick={prevAboutImage}
                 disabled={isAboutImageTransitioning}
                 aria-label="Previous image"
               >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M15 4.5L7.5 12L15 19.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M15 4.5L7.5 12L15 19.5" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </button>
 
               <button 
                 type="button" 
-                className="absolute right-2 top-1/2 -translate-y-1/2 z-20 h-10 w-10 rounded-full bg-[#65482C]/80 hover:bg-[#65482C] text-white transition-all duration-300 hover:scale-110 active:scale-95 flex items-center justify-center shadow-lg"
+                className="absolute right-2 top-1/2 -translate-y-1/2 z-20 h-12 w-12 rounded-lg bg-[#65482C] hover:bg-[#8B6F47] text-[#FFE4CC] transition-all duration-300 hover:scale-110 active:scale-95 flex items-center justify-center shadow-lg border-2 border-[#AD9073]/50 hover:border-[#AD9073]"
                 onClick={nextAboutImage}
                 disabled={isAboutImageTransitioning}
                 aria-label="Next image"
               >
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M9 4.5L16.5 12L9 19.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M9 4.5L16.5 12L9 19.5" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </button>
 
@@ -256,19 +256,10 @@ export default function Home() {
 
             <Link 
               href="/about-us"
-              className={`btn cube cube-hover w-[40%] ${animatedSections.about ? "animate-zoomIn" : "opacity-0"}`}
+              className={`btn ${animatedSections.about ? "animate-zoomIn" : "opacity-0"}`}
               style={{ animationDelay: "0.6s" }}
             >
-              <div className="bg-top">
-                <div className="bg-inner"></div>
-              </div>
-              <div className="bg-right">
-                <div className="bg-inner"></div>
-              </div>
-              <div className="bg">
-                <div className="bg-inner"></div>
-              </div>
-              <div className="text">Explore More</div>
+              <span className="text">Explore More</span>
             </Link>
           </div>
 
@@ -490,19 +481,10 @@ export default function Home() {
 
               <Link 
                 href="/our-products"
-                className={`btn cube cube-hover mt-12 ${animatedSections.product ? "animate-zoomIn" : "opacity-0"}`}
+                className={`btn mt-12 ${animatedSections.product ? "animate-zoomIn" : "opacity-0"}`}
                 style={{ animationDelay: "0.5s" }}
               >
-                <div className="bg-top">
-                  <div className="bg-inner"></div>
-                </div>
-                <div className="bg-right">
-                  <div className="bg-inner"></div>
-                </div>
-                <div className="bg">
-                  <div className="bg-inner"></div>
-                </div>
-                <div className="text">View Product</div>
+                <span className="text">View Products</span>
               </Link>
             </div>
 
@@ -543,21 +525,21 @@ export default function Home() {
               <div className="w-full  h-auto flex flex-row absolute top-[40%] left-[6%] justify-between">
                 <button 
                   type="button" 
-                  className="h-auto w-auto rounded-full bg-black/[.5] p-1 transition-all duration-300 hover:bg-black/[.8] hover:scale-110 active:scale-95" 
+                  className="h-12 w-12 rounded-lg bg-[#65482C] hover:bg-[#8B6F47] text-[#FFE4CC] transition-all duration-300 hover:scale-110 active:scale-95 flex items-center justify-center shadow-lg border-2 border-[#AD9073]/50 hover:border-[#AD9073]" 
                   onClick={prevSlide}
                 >
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M15 4.5L7.5 12L15 19.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M15 4.5L7.5 12L15 19.5" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </button>
 
                 <button 
                   type="button" 
-                  className="h-auto w-auto rounded-full bg-black/[.5] p-1 transition-all duration-300 hover:bg-black/[.8] hover:scale-110 active:scale-95" 
+                  className="h-12 w-12 rounded-lg bg-[#65482C] hover:bg-[#8B6F47] text-[#FFE4CC] transition-all duration-300 hover:scale-110 active:scale-95 flex items-center justify-center shadow-lg border-2 border-[#AD9073]/50 hover:border-[#AD9073]" 
                   onClick={nextSlide}
                 >
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M9 4.5L16.5 12L9 19.5" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M9 4.5L16.5 12L9 19.5" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </button>
               </div>
