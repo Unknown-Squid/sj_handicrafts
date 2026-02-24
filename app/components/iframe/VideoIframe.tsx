@@ -1,3 +1,5 @@
+import { useMemo } from 'react';
+
 const VideoIframe = ({
     src,
     isVisible,
@@ -11,16 +13,23 @@ const VideoIframe = ({
     iframeRef: React.RefObject<HTMLIFrameElement>;
     autoplay?: boolean;
   }) => {
-    const videoSrc = autoplay && isVisible ? `${src}&autoplay=1&mute=1&${Date.now()}` : src;
+    const videoSrc = useMemo(() => {
+      if (autoplay && isVisible) {
+        // Check if URL already has query parameters
+        const separator = src.includes('?') ? '&' : '?';
+        return `${src}${separator}autoplay=1&mute=1`;
+      }
+      return src;
+    }, [src, autoplay, isVisible]);
   
     return (
       <iframe
-        className={`${isVisible ? animationClass : "opacity-0"}`}
+        className={`${isVisible ? animationClass : "opacity-0"} w-full h-full`}
         ref={iframeRef}
-        width="90%"
-        height="500"
         src={videoSrc}
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        title="YouTube video player"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerPolicy="strict-origin-when-cross-origin"
         allowFullScreen
       />
     );

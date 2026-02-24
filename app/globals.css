@@ -144,6 +144,17 @@ body {
   }
 }
 
+@keyframes slideUpFadeIn {
+  from {
+    transform: translateY(80px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
 @keyframes fadeInLeft {
   0% {
     opacity: 0;
@@ -248,6 +259,54 @@ body {
   }
 }
 
+@keyframes cardFadeInScale {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) rotate(-2deg);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(0.95) rotate(1deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+@keyframes cardSlideInLeft {
+  0% {
+    opacity: 0;
+    transform: translateX(-50px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes cardSlideInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(50px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes cardZoomIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.7);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 @keyframes cardHover {
   0%, 100% {
     transform: translateY(0) scale(1);
@@ -340,6 +399,10 @@ body {
   animation: slideInBottom 1s ease-out forwards;
 }
 
+.animate-slideUpFadeIn {
+  animation: slideUpFadeIn 1.5s ease-out forwards;
+}
+
 .fade-in-left {
   animation: fadeInLeft 1s ease-out forwards;
 }
@@ -378,6 +441,22 @@ body {
 
 .animate-cardSlideUp {
   animation: cardSlideUp 0.6s ease-out forwards;
+}
+
+.animate-cardFadeInScale {
+  animation: cardFadeInScale 0.8s ease-out forwards;
+}
+
+.animate-cardSlideInLeft {
+  animation: cardSlideInLeft 0.7s ease-out forwards;
+}
+
+.animate-cardSlideInRight {
+  animation: cardSlideInRight 0.7s ease-out forwards;
+}
+
+.animate-cardZoomIn {
+  animation: cardZoomIn 0.6s ease-out forwards;
 }
 
 .card-hover-effect {
@@ -525,4 +604,20 @@ body {
   right: 0;
   background-color: transparent;
   border-left: 3px solid black;
+}
+
+/* Brand Carousel Animation */
+@keyframes brandCarousel {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-brandCarousel {
+  animation: brandCarousel 30s linear infinite;
+  display: flex;
+  width: fit-content;
 }

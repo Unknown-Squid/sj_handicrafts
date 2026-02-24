@@ -71,18 +71,22 @@ export default function OurProducts() {
                 <p className="text-center text-[#65482C] font-poppinsItalic">₱ {product.price}</p>
 
                 {/* Preview Box */}
-                {hoveredProductId === product.id && (
-                  <div className="absolute bottom-[30%] left-[76%] w-[300px] h-[300px] bg-white shadow-2xl flex items-center justify-center z-[60] rounded-lg overflow-hidden">
-                    <Image
-                      src={product.image}
-                      alt={product.name}
-                      width={300}
-                      height={300}
-                      className="w-full h-full object-cover"
-                      unoptimized
-                    />
-                  </div>
-                )}
+                <div
+                  className={`absolute bottom-[30%] left-[76%] w-[300px] h-[300px] bg-white shadow-2xl flex items-center justify-center z-60 rounded-lg overflow-hidden transition-all duration-300 ease-out ${
+                    hoveredProductId === product.id
+                      ? "opacity-100 scale-100 delay-300"
+                      : "opacity-0 scale-90 pointer-events-none delay-0"
+                  }`}
+                >
+                  <Image
+                    src={product.image}
+                    alt={product.name}
+                    width={300}
+                    height={300}
+                    className="w-full h-full object-cover"
+                    unoptimized
+                  />
+                </div>
               </div>
             ))}
           </div>

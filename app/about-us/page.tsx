@@ -23,16 +23,30 @@ if (L) {
   });
 }
 
+// Handicrafts images from public folder
+const brandLogosImages = [
+  "/logos/kultura_logo.png",
+  "/logos/s&r_logo.png",
+  "/logos/hilton_and_resorts_logo.png",
+  "/logos/lcc_logo.png",
+  "/logos/puregold_logo.png",
+];
+
 export default function AboutUs() {
   const [youtubeRef, youtubeVisible] = useInView<HTMLIFrameElement>({ threshold: 0.5 });
-  const [facebookRef, facebookVisible] = useInView<HTMLIFrameElement>({ threshold: 0.5 });
+  const [facebookRef, facebookVisible] = useInView<HTMLVideoElement>({ threshold: 0.5 });
+  const [dtiImagesRef, dtiImagesVisible] = useInView<HTMLDivElement>({ threshold: 0.3 });
   const [companyAboutRef, companyAboutVisible] = useInView<HTMLDivElement>({ threshold: 0.5 });
+  const [servicesRef, servicesVisible] = useInView<HTMLDivElement>({ threshold: 0.3 });
   const mapRef = useRef<HTMLDivElement>(null);
+  const mapInstanceRef = useRef<any>(null);
 
   const [animatedSections, setAnimatedSections] = useState({
     youtube: false,
     facebook: false,
+    dtiImages: false,
     companyAbout: false,
+    services: false,
   });
 
   // Track Visibility
@@ -41,72 +55,257 @@ export default function AboutUs() {
       ...prev,
       youtube: youtubeVisible || prev.youtube,
       facebook: facebookVisible || prev.facebook,
+      dtiImages: dtiImagesVisible || prev.dtiImages,
       companyAbout: companyAboutVisible || prev.companyAbout,
+      services: servicesVisible || prev.services,
     }));
-  }, [youtubeVisible, facebookVisible, companyAboutVisible]);
+  }, [youtubeVisible, facebookVisible, dtiImagesVisible, companyAboutVisible, servicesVisible]);
 
-  // Initialize Leaflet Map
+  // Initialize Leaflet Map when section becomes visible
   useEffect(() => {
-    if (typeof window !== "undefined" && L && mapRef.current) {
-      const map = L.map(mapRef.current, {
-        dragging: false,
-        touchZoom: false,
-        scrollWheelZoom: false,
-        doubleClickZoom: false,
-        boxZoom: false,
-        keyboard: false,
-        zoomControl: false,
-      }).setView([13.24137, 123.56619], 15);
+    if (typeof window !== "undefined" && L && mapRef.current && animatedSections.companyAbout && !mapInstanceRef.current) {
+      // Delay to ensure container is visible and has dimensions
+      const timer = setTimeout(() => {
+        if (mapRef.current && !mapInstanceRef.current) {
+          // Check if container has dimensions
+          const rect = mapRef.current.getBoundingClientRect();
+          if (rect.width > 0 && rect.height > 0) {
+            try {
+              const map = L.map(mapRef.current, {
+                dragging: false,
+                touchZoom: false,
+                scrollWheelZoom: false,
+                doubleClickZoom: false,
+                boxZoom: false,
+                keyboard: false,
+                zoomControl: false,
+              }).setView([13.24137, 123.56619], 15);
 
-      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-      }).addTo(map);
+              L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+              }).addTo(map);
 
-      L.marker([13.24137, 123.56619])
-        .addTo(map)
-        .bindPopup("SJ Handicrafts Location")
-        .openPopup();
+              L.marker([13.24137, 123.56619])
+                .addTo(map)
+                .bindPopup("SJ Handicrafts Location")
+                .openPopup();
+
+              mapInstanceRef.current = map;
+              
+              // Invalidate size multiple times to ensure proper rendering
+              setTimeout(() => {
+                if (mapInstanceRef.current) {
+                  mapInstanceRef.current.invalidateSize();
+                }
+              }, 100);
+              setTimeout(() => {
+                if (mapInstanceRef.current) {
+                  mapInstanceRef.current.invalidateSize();
+                }
+              }, 500);
+            } catch (error) {
+              console.error("Error initializing map:", error);
+            }
+          }
+        }
+      }, 600); // Wait for animation to complete
+
+      return () => clearTimeout(timer);
     }
-  }, []);
+  }, [animatedSections.companyAbout]);
 
   return (
     <div className="bg-transparent h-700px w-full flex flex-col z-10 overflow-auto scroll-bar">
       <div className="w-full h-fit bg-black/[.55]">
         <Header />
 
-        <div className="w-full h-[700px] bg-[#65482C]/[.5] flex flex-row">
-          <div className="bg-transparent w-full h-full flex flex-col items-center justify-center px-10 md:px-20">
-            <div className="flex-col flex w-full items-center justify-center gap-1 mb-8">
-              <h1 className="text-[#FFE4CC] text-[35px] font-merriweatherBold animate-slideInTop">SJ HANDICRAFTS</h1>
-              <p className="text-[#FFE4CC] text-[14px] font-merriweatherBoldItalic animate-slideInTop">&#34;Creativity Crafted by the Community&#34;</p>
+        <div className="w-full h-[1200px] bg-[#65482C]/[.5] flex flex-row relative overflow-hidden">
+          {/* Background Video */}
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            className="absolute inset-0 w-full h-full object-cover z-0"
+          >
+            <source src="/animations/handicrafts_animation_video_1.mp4" type="video/mp4" />
+          </video>
+
+          <div className="absolute inset-0 bg-black/[.6] z-10 shadow-[0_0_100px_50px_rgba(0,0,0,0.5)_inset,0_0_200px_100px_rgba(0,0,0,0.3)]">
+
+          </div>
+          
+          {/* Overlay for better text readability */}
+          <div className="absolute inset-0 bg-[#65482C]/[.7] z-10"></div>
+
+          {/* Content */}
+          <div className="bg-transparent w-full h-full flex flex-col items-center px-10 md:px-20 relative z-20">
+            <div className="flex-col flex w-full items-center justify-center gap-1 mb-8 mt-32">
+              <h1 className="text-[#FFE4CC] text-[35px] font-merriweatherBold opacity-0 animate-slideUpFadeIn" style={{ animationDelay: "0.2s" }}>SJ HANDICRAFTS</h1>
+              <p className="text-[#FFE4CC] text-[14px] font-merriweatherBoldItalic opacity-0 animate-slideUpFadeIn" style={{ animationDelay: "0.4s" }}>&#34;Creativity Crafted by the Community&#34;</p>
             </div>
 
-            <p className="text-[#FFE4CC] text-[20px] font-urbanistSemiBold w-full max-w-4xl text-justify leading-[1.6] animate-slideInBottom">
+            <p className="text-[#FFE4CC] text-[24px] font-urbanistSemiBold w-full max-w-4xl text-justify leading-[1.6] opacity-0 animate-slideUpFadeIn" style={{ animationDelay: "0.6s" }}>
               SJ Handicrafts were established last July 2020 at the hometown of my husband – Ligao City, Albay. We decided to settle in the province last 2019, because we fell in love with the slow paced environment and its simplicity. As we build our nest, we used ethical and sustainable products with the help of our local artisans and that started the birth of SJ Handicrafts – to support local artisans.
               <br /><br />
               Our handicraft product is carefully and meaningfully curated by our local artisans. We use local natural resources – Abaca and Seagrass.
               <br /><br />
               The individual artisanship of our handcrafted items is the paramount criterion of our brand.
             </p>
+
+            {/* Brand Logos Carousel */}
+            <div className="w-full mt-16 mb-8 opacity-0 animate-slideUpFadeIn" style={{ animationDelay: "0.8s" }}>
+              <h2 className="text-4xl md:text-5xl text-[#FFE4CC] font-poppinsBold text-center mb-12 mt-20">
+                Our Partners
+              </h2>
+              <div className="relative w-full overflow-hidden group py-8">
+                
+                <div className="flex animate-brandCarousel group-hover:[animation-play-state:paused]">
+                  {/* First set of logos */}
+                  {brandLogosImages.map((logoPath, index) => {
+                    const brandName = logoPath.split('/').pop()?.replace(/_/g, ' ').replace('.png', '').replace('logo', '').trim() || `Brand ${index + 1}`;
+                    return (
+                      <div key={`brand-1-${index}`} className="flex-shrink-0 mx-12 flex items-center justify-center h-32 w-48">
+                        <Image
+                          src={logoPath}
+                          alt={brandName}
+                          width={500}
+                          height={500}
+                          className="h-full w-auto object-contain opacity-90 hover:opacity-100 transition-all duration-300 hover:scale-105"
+                          unoptimized
+                        />
+                      </div>
+                    );
+                  })}
+                  {/* Duplicate set for seamless loop */}
+                  {brandLogosImages.map((logoPath, index) => {
+                    const brandName = logoPath.split('/').pop()?.replace(/_/g, ' ').replace('.png', '').replace('logo', '').trim() || `Brand ${index + 1}`;
+                    return (
+                      <div key={`brand-2-${index}`} className="flex-shrink-0 mx-12 flex items-center justify-center h-32 w-48">
+                        <Image
+                          src={logoPath}
+                          alt={brandName}
+                          width={500}
+                          height={500}
+                          className="h-full w-auto object-contain opacity-90 hover:opacity-100 transition-all duration-300 hover:scale-105"
+                          unoptimized
+                        />
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
           </div>
+          
         </div>
+        
       </div>
 
-      <div className="w-full h-fit bg-black/[.55]">
-        <div className="w-auto h-auto flex flex-col justify-center items-center gap-16 py-16">
-        <VideoIframe
-          src="https://www.youtube.com/embed/ssFl9V4d-pg"
-          isVisible={animatedSections.youtube}
-          animationClass="animate-fadeIn"
-          iframeRef={youtubeRef}
-          autoplay
-        />
-        <VideoIframe
-          src="https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fsjhandicrafts04%2Fvideos%2F544571241626774%2F"
-          isVisible={animatedSections.facebook}
-          animationClass="animate-fadeIn"
-          iframeRef={facebookRef}
-        />
+      <div className="w-full h-fit bg-black/[.55] flex flex-col justify-center items-center py-20">
+        <div className="w-full max-w-7xl mx-auto px-10">
+          {/* Services Section */}
+          <div ref={servicesRef} className="w-full mb-20">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+              {/* Service 1 */}
+              <div 
+                className={`relative h-[500px] rounded-2xl overflow-hidden shadow-lg opacity-0 ${animatedSections.services ? "animate-cardSlideInLeft" : ""}`}
+                style={{ animationDelay: "0.4s" }}
+              >
+                <Image 
+                  src="/images/services_image_1.png"
+                  alt="Service 1"
+                  fill
+                  className="object-cover transition-transform duration-700 hover:scale-110"
+                  unoptimized
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex items-end">
+                  <div className="w-full p-8">
+                    <h3 className="text-3xl text-[#FFE4CC] font-poppinsBold mb-3">
+                      Services
+                    </h3>
+                    <p className="text-lg text-white/90 font-poppinsRegular">
+                      We offer a wide range of services to our clients
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Service 2 */}
+              <div 
+                className={`relative h-[500px] rounded-2xl overflow-hidden shadow-lg opacity-0 ${animatedSections.services ? "animate-cardSlideInRight" : ""}`}
+                style={{ animationDelay: "0.6s" }}
+              >
+                <Image 
+                  src="/images/services_image_2.png"
+                  alt="Service 2"
+                  fill
+                  className="object-cover transition-transform duration-700 hover:scale-110"
+                  unoptimized
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex items-end">
+                  <div className="w-full p-8">
+                    <h3 className="text-3xl text-[#FFE4CC] font-poppinsBold mb-3">
+                      Inclusive Craft
+                    </h3>
+                    <p className="text-lg text-white/90 font-poppinsRegular">
+                      Expanding opportunities for Persons Deprived of Liberty through craftsmanship and meaningful work
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Videos Section */}
+          <div className="w-full flex flex-col lg:flex-row justify-center items-center gap-8 lg:gap-12">
+            {/* YouTube Video */}
+            <div className="relative w-full lg:w-1/2 h-[500px] rounded-2xl overflow-hidden shadow-lg">
+              <div className="absolute inset-0">
+                <VideoIframe
+                  src="https://www.youtube.com/embed/ssFl9V4d-pg?si=G0ZbmxZWHrV-zkfz&start=7"
+                  isVisible={animatedSections.youtube}
+                  animationClass="animate-fadeIn"
+                  iframeRef={youtubeRef}
+                  autoplay
+                />
+              </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end pointer-events-none">
+                <div className="w-full p-8">
+                  <h3 className="text-3xl text-[#FFE4CC] font-poppinsBold mb-3">
+                    Our Story
+                  </h3>
+                  <p className="text-lg text-white/90 font-poppinsRegular">
+                    Discover the journey behind our craft
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Animation Video */}
+            <div className="relative w-full lg:w-1/2 h-[500px] rounded-2xl overflow-hidden shadow-lg">
+              <video
+                ref={facebookRef}
+                autoPlay
+                loop
+                muted
+                playsInline
+                className={`absolute inset-0 w-full h-full object-cover ${animatedSections.facebook ? "animate-fadeIn" : "opacity-0"}`}
+              >
+                <source src="/animations/handicrafts_animation_video_2.mp4" type="video/mp4" />
+              </video>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end pointer-events-none">
+                <div className="w-full p-8">
+                  <h3 className="text-3xl text-[#FFE4CC] font-poppinsBold mb-3">
+                    Our Craftsmanship
+                  </h3>
+                  <p className="text-lg text-white/90 font-poppinsRegular">
+                    Experience the artistry in motion
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -114,118 +313,128 @@ export default function AboutUs() {
         <div className="w-full py-20 px-10">
 
           {/* Achievements & Awards Section */}
-          <div className="w-full max-w-7xl mx-auto">
+          <div ref={dtiImagesRef} className="w-full max-w-7xl mx-auto">
             <h2 
-              className={`text-4xl text-[#65482C] font-poppinsBold text-center mb-16 ${animatedSections.companyAbout ? "animate-slideInTop" : ""} opacity-0`}
+              className={`text-4xl text-[#65482C] font-poppinsBold text-center mb-16 ${animatedSections.dtiImages ? "animate-slideInTop" : ""} opacity-0`}
               style={{ animationDelay: "0.4s" }}
             >
-              Achievements & Awards
+              DTI Partnership & Community Engagement
             </h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {/* Award Card 1 */}
               <div 
-                className={`bg-white rounded-2xl p-8 shadow-lg border-2 border-[#AD9073]/30 card-hover-effect opacity-0 ${animatedSections.companyAbout ? "animate-cardSlideUp" : ""}`}
+                className={`bg-white rounded-2xl p-0 shadow-lg border-2 border-[#AD9073]/30 card-hover-effect opacity-0 overflow-hidden ${animatedSections.dtiImages ? "animate-cardFadeInScale" : ""}`}
                 style={{ animationDelay: "0.5s" }}
               >
-                <div className="w-16 h-16 bg-gradient-to-br from-[#AD9073] to-[#65482C] rounded-full flex items-center justify-center mb-6 mx-auto shadow-md">
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-                  </svg>
-                </div>
-                <h3 className="text-2xl font-poppinsBold text-[#65482C] text-center mb-4">Excellence Award</h3>
-                <p className="text-[#65482C] font-poppinsMedium text-center text-lg mb-2">2023</p>
-                <p className="text-[#65482C]/80 font-poppinsRegular text-center text-sm">Recognized for outstanding craftsmanship and quality in handmade products</p>
+                <Image 
+                  src="/images/dti_activity_image_1.png"
+                  alt="DTI Activity 1"
+                  width={400}
+                  height={400}
+                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                  unoptimized
+                />
               </div>
 
               {/* Award Card 2 */}
               <div 
-                className={`bg-white rounded-2xl p-8 shadow-lg border-2 border-[#AD9073]/30 card-hover-effect opacity-0 ${animatedSections.companyAbout ? "animate-cardSlideUp" : ""}`}
+                className={`bg-white rounded-2xl p-0 shadow-lg border-2 border-[#AD9073]/30 card-hover-effect opacity-0 overflow-hidden ${animatedSections.dtiImages ? "animate-cardSlideInLeft" : ""}`}
                 style={{ animationDelay: "0.6s" }}
               >
-                <div className="w-16 h-16 bg-gradient-to-br from-[#AD9073] to-[#65482C] rounded-full flex items-center justify-center mb-6 mx-auto shadow-md">
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
-                  </svg>
-                </div>
-                <h3 className="text-2xl font-poppinsBold text-[#65482C] text-center mb-4">Community Impact</h3>
-                <p className="text-[#65482C] font-poppinsMedium text-center text-lg mb-2">2022</p>
-                <p className="text-[#65482C]/80 font-poppinsRegular text-center text-sm">Honored for supporting local artisans and sustainable practices</p>
+                <Image 
+                  src="/images/dti_activity_image_2.png"
+                  alt="DTI Activity 2"
+                  width={400}
+                  height={400}
+                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                  unoptimized
+                />
               </div>
 
               {/* Award Card 3 */}
               <div 
-                className={`bg-white rounded-2xl p-8 shadow-lg border-2 border-[#AD9073]/30 card-hover-effect opacity-0 ${animatedSections.companyAbout ? "animate-cardSlideUp" : ""}`}
+                className={`bg-white rounded-2xl p-0 shadow-lg border-2 border-[#AD9073]/30 card-hover-effect opacity-0 overflow-hidden ${animatedSections.dtiImages ? "animate-cardSlideInRight" : ""}`}
                 style={{ animationDelay: "0.7s" }}
               >
-                <div className="w-16 h-16 bg-gradient-to-br from-[#AD9073] to-[#65482C] rounded-full flex items-center justify-center mb-6 mx-auto shadow-md">
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-                  </svg>
-                </div>
-                <h3 className="text-2xl font-poppinsBold text-[#65482C] text-center mb-4">Quality Excellence</h3>
-                <p className="text-[#65482C] font-poppinsMedium text-center text-lg mb-2">2023</p>
-                <p className="text-[#65482C]/80 font-poppinsRegular text-center text-sm">Awarded for maintaining highest standards in product quality</p>
+                <Image 
+                  src="/images/dti_activity_image_3.png"
+                  alt="DTI Activity 3"
+                  width={400}
+                  height={400}
+                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                  unoptimized
+                />
               </div>
 
               {/* Achievement Card 4 */}
               <div 
-                className={`bg-white rounded-2xl p-8 shadow-lg border-2 border-[#AD9073]/30 card-hover-effect opacity-0 ${animatedSections.companyAbout ? "animate-cardSlideUp" : ""}`}
+                className={`bg-white rounded-2xl p-0 shadow-lg border-2 border-[#AD9073]/30 card-hover-effect opacity-0 overflow-hidden ${animatedSections.dtiImages ? "animate-cardZoomIn" : ""}`}
                 style={{ animationDelay: "0.8s" }}
               >
-                <div className="w-16 h-16 bg-gradient-to-br from-[#AD9073] to-[#65482C] rounded-full flex items-center justify-center mb-6 mx-auto shadow-md">
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                  </svg>
-                </div>
-                <h3 className="text-2xl font-poppinsBold text-[#65482C] text-center mb-4">Rapid Growth</h3>
-                <p className="text-[#65482C] font-poppinsMedium text-center text-lg mb-2">2021-2024</p>
-                <p className="text-[#65482C]/80 font-poppinsRegular text-center text-sm">Expanded from local to national recognition in 3 years</p>
+                <Image 
+                  src="/images/dti_activity_image_4.png"
+                  alt="DTI Activity 4"
+                  width={400}
+                  height={400}
+                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                  unoptimized
+                />
               </div>
 
               {/* Achievement Card 5 */}
               <div 
-                className={`bg-white rounded-2xl p-8 shadow-lg border-2 border-[#AD9073]/30 card-hover-effect opacity-0 ${animatedSections.companyAbout ? "animate-cardSlideUp" : ""}`}
+                className={`bg-white rounded-2xl p-0 shadow-lg border-2 border-[#AD9073]/30 card-hover-effect opacity-0 overflow-hidden ${animatedSections.dtiImages ? "animate-cardSlideUp" : ""}`}
                 style={{ animationDelay: "0.9s" }}
               >
-                <div className="w-16 h-16 bg-gradient-to-br from-[#AD9073] to-[#65482C] rounded-full flex items-center justify-center mb-6 mx-auto shadow-md">
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                  </svg>
-                </div>
-                <h3 className="text-2xl font-poppinsBold text-[#65482C] text-center mb-4">Sustainable Practices</h3>
-                <p className="text-[#65482C] font-poppinsMedium text-center text-lg mb-2">2022</p>
-                <p className="text-[#65482C]/80 font-poppinsRegular text-center text-sm">Certified for eco-friendly production using natural materials</p>
+                <Image 
+                  src="/images/dti_activity_image_5.png"
+                  alt="DTI Activity 5"
+                  width={400}
+                  height={400}
+                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                  unoptimized
+                />
               </div>
 
               {/* Achievement Card 6 */}
               <div 
-                className={`bg-white rounded-2xl p-8 shadow-lg border-2 border-[#AD9073]/30 card-hover-effect opacity-0 ${animatedSections.companyAbout ? "animate-cardSlideUp" : ""}`}
+                className={`bg-white rounded-2xl p-0 shadow-lg border-2 border-[#AD9073]/30 card-hover-effect opacity-0 overflow-hidden ${animatedSections.dtiImages ? "animate-cardFadeInScale" : ""}`}
                 style={{ animationDelay: "1.0s" }}
               >
-                <div className="w-16 h-16 bg-gradient-to-br from-[#AD9073] to-[#65482C] rounded-full flex items-center justify-center mb-6 mx-auto shadow-md">
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                  </svg>
-                </div>
-                <h3 className="text-2xl font-poppinsBold text-[#65482C] text-center mb-4">Artisan Partnership</h3>
-                <p className="text-[#65482C] font-poppinsMedium text-center text-lg mb-2">2020-Present</p>
-                <p className="text-[#65482C]/80 font-poppinsRegular text-center text-sm">Supporting 50+ local artisans with fair trade practices</p>
+                <Image 
+                  src="/images/dti_activity_image_6.png"
+                  alt="DTI Activity 6"
+                  width={400}
+                  height={400}
+                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                  unoptimized
+                />
               </div>
             </div>
           </div>
+        </div>
+      </div>
 
-          {/* Location and Map Section */}
+      {/* Location and Map Section */}
+      <div className="w-full h-fit bg-transparent py-20">
+        <div className="w-full max-w-6xl mx-auto px-10">
           <div
             ref={companyAboutRef} 
-            className="w-full max-w-6xl mx-auto mt-16"
+            className="w-full"
           >
-            <p className={`text-lg text-[#65482C] font-poppinsRegular mb-5 text-center ${animatedSections.companyAbout ? "animate-slideInBottom" : ""} opacity-0`}>
+            <h2 className={`text-4xl text-[#FFE4CC] font-poppinsBold text-center mb-8 ${animatedSections.companyAbout ? "animate-slideInTop" : ""} opacity-0`} style={{ animationDelay: "0.2s" }}>
+              Visit Us
+            </h2>
+            <p className={`text-lg text-[#FFE4CC] font-poppinsRegular mb-8 text-center ${animatedSections.companyAbout ? "animate-slideInBottom" : ""} opacity-0`} style={{ animationDelay: "0.3s" }}>
               <b>Location: </b>SJ Handicrafts Trading Purok 3, Brgy, Ligao, 4504 Albay
             </p>
-            <div ref={mapRef} className={`h-[400px] w-full bg-white rounded-lg shadow-lg ${animatedSections.companyAbout ? "animate-cardSlideUp" : ""} opacity-0`} style={{ animationDelay: "0.2s" }}/>
+            <div 
+              ref={mapRef} 
+              className={`h-[500px] w-full bg-white rounded-lg shadow-lg ${animatedSections.companyAbout ? "animate-cardSlideUp" : ""} ${animatedSections.companyAbout ? "opacity-100" : "opacity-0"}`} 
+              style={{ animationDelay: "0.4s", position: "relative", zIndex: 1, minHeight: "500px" }}
+            />
           </div>
-
         </div>
       </div>
 
