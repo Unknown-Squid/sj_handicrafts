@@ -24,20 +24,21 @@ export default function OurProducts() {
   );
 
   return (
-    <div className="bg-transparent h-700px w-full flex flex-col z-10 overflow-auto scroll-bar">
-      <div className="w-full h-fit bg-black/[.55]">
+    <div className="bg-transparent min-h-screen w-full flex flex-col z-10 overflow-auto scroll-bar">
+      <div className="w-full min-h-screen h-fit bg-black/[.55]">
         <Header />
 
-        <div className="w-full h-[700px] bg-[#FFE4CC]">
-          <div className="w-full flex flex-row items-center justify-center h-[100px] gap-10">
+        <div className="w-full h-full bg-[#FFE4CC] pb-8 md:pb-0">
+          {/* Category Buttons */}
+          <div className="w-full flex flex-row items-center justify-center h-[80px] md:h-[100px] gap-6 md:gap-10 px-4">
             {["basket", "place mat"].map((category) => (
               <button
                 key={category}
                 type="button"
-                className={`text-lg font-poppinsMedium transition-all duration-300 ${
+                className={`text-base md:text-lg font-poppinsMedium transition-all duration-300 px-4 py-2 rounded-lg ${
                   selectedCategory === category
-                    ? "text-[#65482C] underline"
-                    : "text-[#65482C]/[0.5] hover:text-[#65482C]"
+                    ? "text-[#65482C] bg-[#AD9073]/30 underline font-poppinsBold"
+                    : "text-[#65482C]/[0.5] hover:text-[#65482C] hover:bg-[#AD9073]/20"
                 }`}
                 onClick={() => setSelectedCategory(category)}
               >
@@ -47,17 +48,17 @@ export default function OurProducts() {
           </div>
 
           {/* Display filtered products */}
-          <div className="w-full h-full flex flex-wrap gap-10 p-4 relative">
+          <div className="w-full h-full flex flex-wrap justify-center items-start gap-6 md:gap-10 p-4 md:p-8 relative">
             {filteredProducts.map((product) => (
               <div
                 key={product.id}
-                className={`h-fit w-[300px] flex flex-col items-center gap-2 relative shadow-md hover:shadow-lg p-2 transition-all duration-300 hover:scale-105 ${
+                className={`h-fit w-full sm:w-[280px] md:w-[300px] flex flex-col items-center gap-3 relative shadow-md hover:shadow-lg p-3 md:p-2 transition-all duration-300 hover:scale-105 ${
                   hoveredProductId === product.id ? "z-50" : "z-10"
                 }`}
                 onMouseEnter={() => setHoveredProductId(product.id)}
                 onMouseLeave={() => setHoveredProductId(0)}
               >
-                <div className="bg-black w-[90%] h-[200px] rounded-lg overflow-hidden relative">
+                <div className="bg-black w-full md:w-[90%] h-[200px] md:h-[200px] rounded-lg overflow-hidden relative">
                   <Image
                     src={product.image}
                     alt={product.name}
@@ -67,12 +68,12 @@ export default function OurProducts() {
                     unoptimized
                   />
                 </div>
-                <p className="text-center text-[#65482C] font-poppinsMedium">{product.name}</p>
-                <p className="text-center text-[#65482C] font-poppinsItalic">₱ {product.price}</p>
+                <p className="text-center text-[#65482C] font-poppinsMedium text-sm md:text-base">{product.name}</p>
+                <p className="text-center text-[#65482C] font-poppinsItalic text-sm md:text-base">₱ {product.price}</p>
 
-                {/* Preview Box */}
+                {/* Preview Box - Hidden on mobile, shown on desktop hover */}
                 <div
-                  className={`absolute bottom-[30%] left-[76%] w-[300px] h-[300px] bg-white shadow-2xl flex items-center justify-center z-60 rounded-lg overflow-hidden transition-all duration-300 ease-out ${
+                  className={`hidden md:flex absolute bottom-[30%] left-[76%] w-[250px] lg:w-[300px] h-[250px] lg:h-[300px] bg-white shadow-2xl items-center justify-center z-60 rounded-lg overflow-hidden transition-all duration-300 ease-out ${
                     hoveredProductId === product.id
                       ? "opacity-100 scale-100 delay-300"
                       : "opacity-0 scale-90 pointer-events-none delay-0"

@@ -56,8 +56,21 @@ export const metadata: Metadata = {
     description: "Premium handmade baskets, placemats, and custom handicrafts from the Philippines.",
   },
   icons: {
-    icon: "/logos/company logo.png",
-    apple: "/logos/company logo.png",
+    icon: [
+      {
+        url: "/logos/company logo.png",
+        sizes: "any",
+        type: "image/png",
+      },
+    ],
+    apple: [
+      {
+        url: "/logos/company logo.png",
+        sizes: "180x180",
+        type: "image/png",
+      },
+    ],
+    shortcut: "/logos/company logo.png",
   },
 };
 
