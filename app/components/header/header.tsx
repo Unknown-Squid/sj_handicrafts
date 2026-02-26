@@ -23,7 +23,7 @@ const Header = () => {
       <div className="w-full h-[80px] bg-transparent justify-between flex flex-row z-10">
 
         {/* Page Navbar */}
-        <div className="w-2/5 lg:w-2/5 h-full flex justify-center items-center">
+        <div className="w-2/5 lg:w-2/5 h-full flex justify-center items-center ml-10">
           { 
             isActive("/") ? null : <button
             className={`flex flex-row items-center gap-2 opacity-60 hover:opacity-100`}

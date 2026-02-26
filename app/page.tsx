@@ -3,6 +3,7 @@ import Image from "next/image";
 import heroLogo from '../public/logos/sj handicrafts hero logo.png';
 import Header from "./components/header/header";
 import Footer from "./components/footer/footer";
+import PartnersCarousel from "./components/partners-carousel/PartnersCarousel";
 import { useInView } from "./hooks/useInView";
 import { useState, useEffect } from "react";
 import Link from "next/link";
@@ -117,7 +118,7 @@ export default function Home() {
         <Header />
 
         {/* Page Hero Display */}
-        <div className="w-full h-screen flex flex-col justify-center lg:items-start lg:flex-row">
+        <div className="w-full h-[600px] flex flex-col justify-center lg:items-start lg:flex-row">
  
           <div className="bg-transparent w-full lg:w-[42%] h-auto lg:h-full flex justify-center lg:justify-end items-center lg:items-start relative mt-2 lg:mt-0">
             <div className="w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] lg:w-[450px] lg:h-[450px] xl:w-[500px] xl:h-[500px] lg:absolute lg:top-0 lg:left-[15%] opacity-0 animate-zoomIn flex-shrink-0" style={{ animationDelay: "0.2s" }}>
@@ -141,6 +142,11 @@ export default function Home() {
               <span className="inline-block opacity-0 animate-textReveal" style={{ animationDelay: "1.6s" }}>Community</span>
             </h1>
           </div>
+        </div>
+        
+        {/* Partners Carousel - Full Width */}
+        <div className="w-full">
+          <PartnersCarousel showTitle={true} animationDelay="2.0s" />
         </div>
       </div>
 
@@ -269,10 +275,10 @@ export default function Home() {
 
             <Link 
               href="/about-us"
-              className={`btn text-sm md:text-base ${animatedSections.about ? "animate-zoomIn" : "opacity-0"}`}
+              className={`btn ${animatedSections.about ? "animate-zoomIn" : "opacity-0"}`}
               style={{ animationDelay: "0.6s" }}
             >
-              <span className="text">Explore More</span>
+              <span className="text-[1.5rem] md:text-[1.3rem] lg:text-[2rem]">Explore More</span>
             </Link>
           </div>
 
@@ -487,17 +493,17 @@ export default function Home() {
               className="w-full md:w-1/2 h-full flex flex-col gap-8 md:gap-20 items-center mt-0 md:mt-24 order-2 md:order-1 px-4 md:px-0"
             >
               <p 
-                className={`text-2xl md:text-[42px] text-justify text-[#FFE4CC] w-full md:w-[90%] font-poppinsMedium text-center ${animatedSections.product ? "animate-slideInBottom" : ""} opacity-0`}
+                className={`text-2xl md:text-[42px] text-[#FFE4CC] w-full md:w-[90%] font-poppinsMedium text-left leading-tight ${animatedSections.product ? "animate-slideInBottom" : ""} opacity-0`}
               >
                 Home of Handmade Crafts which is carefully meaningfully curated by our local artisans
               </p>
 
               <Link 
                 href="/our-products"
-                className={`btn text-sm md:text-base mt-4 md:mt-12 ${animatedSections.product ? "animate-zoomIn" : "opacity-0"}`}
+                className={`btn mt-4 md:mt-12 ${animatedSections.product ? "animate-zoomIn" : "opacity-0"}`}
                 style={{ animationDelay: "0.5s" }}
               >
-                <span className="text">View Products</span>
+                <span className="text-[1.5rem] md:text-[1.3rem] lg:text-[2rem]">View Products</span>
               </Link>
             </div>
 

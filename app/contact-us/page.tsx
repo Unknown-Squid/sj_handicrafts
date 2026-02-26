@@ -15,7 +15,7 @@ export default function ContactUs() {
 
         <div className="w-full h-[1200px] bg-contact flex flex-col items-center">
 
-        <h1 className="font-urbanistBold h-[800px] text-[60px] text-white text-shadow-contact 
+        <h1 className="font-urbanistBold h-[800px] text-[25px] sm:text-[30px] md:text-[40px] lg:text-[50px] xl:text-[60px] text-white text-shadow-contact 
                     flex justify-center items-end  mb-20 text-center">
                     Thank you for choosing SJ Handicrafts,
                     <br/>
@@ -24,24 +24,24 @@ export default function ContactUs() {
 
 
 
-          <div className="w-full min-h-[500px] flex flex-col items-center bg-black/[.6] py-12 px-6">
+          <div className="w-full min-h-fit h-fit flex flex-col items-center bg-black/[.6] py-6 sm:py-8 md:py-12 px-4 sm:px-6 overflow-x-hidden">
           
-            <h2 className="font-urbanistBold text-xl md:text-2xl text-white mb-12 mt-6 text-shadow-contact text-center max-w-3xl">
+            <h2 className="font-urbanistBold text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl text-white mb-6 sm:mb-8 md:mb-12 mt-4 sm:mt-6 text-shadow-contact text-center max-w-3xl px-2">
               For updates and inquiries, visit our social media accounts or contact us via email or phone.
             </h2>
 
             {/* Social Media Links */}
-            <div className="w-full max-w-4xl mb-12">
-              <h3 className="text-lg md:text-xl text-white font-poppinsBold mb-6 text-center">Follow Us</h3>
-              <div className="flex flex-col md:flex-row gap-8 md:gap-12 justify-center items-center">
+            <div className="w-full max-w-4xl mb-8 sm:mb-10 md:mb-12 px-2">
+              <h3 className="text-sm sm:text-base md:text-lg lg:text-xl text-white font-poppinsBold mb-4 sm:mb-5 md:mb-6 text-center">Follow Us</h3>
+              <div className="flex flex-col md:flex-row gap-6 sm:gap-8 md:gap-12 justify-center items-center">
                 <a 
                   href="https://www.facebook.com/sjhandicrafts04" 
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex flex-row gap-4 items-center font-poppinsMedium hover:scale-105 transition-transform duration-300 group"
+                  className="md:w-fit w-[250px] justify-start items-center flex flex-row gap-2 sm:gap-3 md:gap-4 items-center font-poppinsMedium hover:scale-105 transition-transform duration-300 group"
                 >
-                  <div className="flex-shrink-0">
-                    <svg width="64" height="64" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" className="group-hover:scale-110 transition-transform duration-300">
+                  <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-16 lg:h-16">
+                    <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full group-hover:scale-110 transition-transform duration-300">
                       <g clipPath="url(#clip0_4593_38199)">
                         <path d="M16 8C16 3.58175 12.4183 0 8 0C3.58175 0 0 3.58175 0 8C0 11.993 2.9255 15.3027 6.75 15.9028V10.3125H4.71875V8H6.75V6.2375C6.75 4.2325 7.94438 3.125 9.77175 3.125C10.647 3.125 11.5625 3.28125 11.5625 3.28125V5.25H10.5538C9.55994 5.25 9.25 5.86669 9.25 6.49937V8H11.4688L11.1141 10.3125H9.25V15.9028C13.0745 15.3027 16 11.9931 16 8Z" fill="#1877F2"/>
                         <path d="M11.1141 10.3125L11.4688 8H9.25V6.49937C9.25 5.86662 9.55994 5.25 10.5538 5.25H11.5625V3.28125C11.5625 3.28125 10.647 3.125 9.77169 3.125C7.94438 3.125 6.75 4.2325 6.75 6.2375V8H4.71875V10.3125H6.75V15.9028C7.16351 15.9676 7.58144 16.0001 8 16C8.41856 16.0001 8.83649 15.9676 9.25 15.9028V10.3125H11.1141Z" fill="white"/>
@@ -53,17 +53,17 @@ export default function ContactUs() {
                       </defs>
                     </svg>
                   </div>
-                  <p className="text-lg md:text-xl text-white text-shadow-contact">SJ Handicrafts</p>
+                  <p className="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl text-white text-shadow-contact break-words">SJ Handicrafts</p>
                 </a>
 
                 <a 
                   href="https://www.instagram.com/sj_handicrafts" 
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex flex-row gap-4 items-center font-poppinsMedium hover:scale-105 transition-transform duration-300 group"
+                  className="md:w-fit w-[250px] justify-start items-center flex flex-row gap-2 sm:gap-3 md:gap-4 items-center font-poppinsMedium hover:scale-105 transition-transform duration-300 group"
                 >
-                  <div className="flex-shrink-0">
-                    <svg width="64" height="64" viewBox="0 0 72 78" fill="none" xmlns="http://www.w3.org/2000/svg" className="group-hover:scale-110 transition-transform duration-300">
+                  <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-16 lg:h-16">
+                    <svg viewBox="0 0 72 78" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full group-hover:scale-110 transition-transform duration-300">
                       <g clipPath="url(#clip0_21_389)">
                         <path d="M54.7422 0H16.7578C7.50273 0 0 7.50273 0 16.7578V54.7422C0 63.9973 7.50273 71.5 16.7578 71.5H54.7422C63.9973 71.5 71.5 63.9973 71.5 54.7422V16.7578C71.5 7.50273 63.9973 0 54.7422 0Z" fill="url(#paint0_radial_21_389)"/>
                         <path d="M54.7422 0H16.7578C7.50273 0 0 7.50273 0 16.7578V54.7422C0 63.9973 7.50273 71.5 16.7578 71.5H54.7422C63.9973 71.5 71.5 63.9973 71.5 54.7422V16.7578C71.5 7.50273 63.9973 0 54.7422 0Z" fill="url(#paint1_radial_21_389)"/>
@@ -87,21 +87,21 @@ export default function ContactUs() {
                       </defs>
                     </svg>
                   </div>
-                  <p className="text-lg md:text-xl text-white text-shadow-contact">sj_handicrafts</p>
+                  <p className="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl text-white text-shadow-contact break-words">sj_handicrafts</p>
                 </a>
               </div>
             </div>
 
             {/* Contact Information */}
-            <div className="w-full max-w-4xl">
-              <h3 className="text-lg md:text-xl text-white font-poppinsBold mb-6 text-center">Contact Us</h3>
-              <div className="flex flex-col md:flex-row gap-8 md:gap-12 justify-center items-center">
-                <a 
+            <div className="w-full max-w-4xl px-2">
+              <h3 className="text-sm sm:text-base md:text-lg lg:text-xl text-white font-poppinsBold mb-4 sm:mb-5 md:mb-6 text-center">Contact Us</h3>
+              <div className="flex flex-col md:flex-row gap-6 sm:gap-8 md:gap-12 justify-center items-center">
+                <a
                   href="mailto:sjhandicrafts04@gmail.com"
-                  className="flex flex-row gap-4 items-center font-poppinsMedium hover:scale-105 transition-transform duration-300 group"
+                  className="md:w-fit w-[250px] justify-start items-center flex flex-row gap-2 sm:gap-3 md:gap-4 items-left md:items-center font-poppinsMedium hover:scale-105 transition-transform duration-300 group"
                 >
-                  <div className="flex-shrink-0">
-                    <svg width="64" height="64" viewBox="0 0 94 78" fill="none" xmlns="http://www.w3.org/2000/svg" className="group-hover:scale-110 transition-transform duration-300">
+                  <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-16 lg:h-16">
+                    <svg viewBox="0 0 94 78" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full group-hover:scale-110 transition-transform duration-300">
                       <g clipPath="url(#clip0_21_379)">
                         <path d="M21.2728 77.6161V37.6421L10.0572 26.3006L0 20.0068V70.5618C0 74.465 2.86102 77.6161 6.38198 77.6161H21.2728Z" fill="#4285F4"/>
                         <path d="M72.3271 77.6161H87.218C90.7495 77.6161 93.5999 74.4532 93.5999 70.5617V20.0072L82.2085 27.2159L72.3271 37.6421V77.6161Z" fill="#34A853"/>
@@ -116,19 +116,19 @@ export default function ContactUs() {
                       </defs>
                     </svg>
                   </div>
-                  <p className="text-lg md:text-xl text-white text-shadow-contact">sjhandicrafts04@gmail.com</p>
+                  <p className="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl text-white text-shadow-contact break-all sm:break-words">sjhandicrafts04@gmail.com</p>
                 </a>
 
                 <a 
                   href="tel:+639178415199"
-                  className="flex flex-row gap-4 items-center font-poppinsMedium hover:scale-105 transition-transform duration-300 group"
+                  className="md:w-fit w-[250px] justify-start items-center flex flex-row gap-2 sm:gap-3 md:gap-4 items-left md:items-center font-poppinsMedium hover:scale-105 transition-transform duration-300 group"
                 >
-                  <div className="flex-shrink-0">
-                    <svg width="64" height="64" viewBox="0 0 95 71" fill="none" xmlns="http://www.w3.org/2000/svg" className="group-hover:scale-110 transition-transform duration-300">
+                  <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 lg:w-16 lg:h-16">
+                    <svg viewBox="0 0 95 71" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full group-hover:scale-110 transition-transform duration-300">
                       <path d="M92.2908 50.1711L71.5092 43.5147C70.6214 43.232 69.6347 43.1724 68.6977 43.345C67.7607 43.5175 66.9241 43.9129 66.3138 44.4716L57.1105 52.8753C42.6668 47.7856 31.0429 39.0983 24.2328 28.3036L35.4772 21.4253C36.2262 20.97 36.7563 20.3447 36.9874 19.6441C37.2184 18.9435 37.1377 18.2057 36.7575 17.5424L27.8511 2.01091C27.4338 1.29591 26.6958 0.712146 25.7643 0.360265C24.8328 0.00838307 23.7662 -0.0895565 22.7484 0.0833339L3.45123 3.41152C2.46999 3.58086 1.59452 3.99378 0.967709 4.58288C0.340902 5.17197 -0.000226039 5.90246 1.12373e-07 6.65511C1.12373e-07 42.2251 38.5759 71 86.0952 71C87.1026 71.0005 88.0805 70.7457 88.8691 70.2772C89.6577 69.8087 90.2105 69.1542 90.4371 68.4207L94.8903 53.9985C95.1202 53.2342 94.9863 52.4339 94.5119 51.7353C94.0374 51.0367 93.252 50.4836 92.2908 50.1711Z" fill="white"/>
                     </svg>
                   </div>
-                  <p className="text-lg md:text-xl text-white text-shadow-contact">0917 841 5199</p>
+                  <p className="text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl text-white text-shadow-contact">0917 841 5199</p>
                 </a>
               </div>
             </div>
