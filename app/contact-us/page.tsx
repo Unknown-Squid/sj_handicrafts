@@ -13,14 +13,14 @@ export default function ContactUs() {
 
         <Header />
 
-        <div className="w-full h-[1200px] bg-contact flex flex-col items-center">
+        <div className="w-full min-h-[1200px] h-full bg-contact flex flex-col items-center">
 
-        <h1 className="font-urbanistBold h-[800px] text-[25px] sm:text-[30px] md:text-[40px] lg:text-[50px] xl:text-[60px] text-white text-shadow-contact 
-                    flex justify-center items-end  mb-20 text-center">
-                    Thank you for choosing SJ Handicrafts,
-                    <br/>
-                    We appreciate your support.
-        </h1>
+          <h1 className="font-urbanistBold h-[800px] text-[25px] sm:text-[30px] md:text-[40px] lg:text-[50px] xl:text-[60px] text-white text-shadow-contact 
+                      flex justify-center items-end  mb-20 text-center">
+                      Thank you for choosing SJ Handicrafts,
+                      <br/>
+                      We appreciate your support.
+          </h1>
 
 
 

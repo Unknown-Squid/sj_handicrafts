@@ -25,10 +25,10 @@ export default function OurProducts() {
 
   return (
     <div className="bg-transparent min-h-screen w-full flex flex-col z-10 overflow-x-hidden">
-      <div className="w-full min-h-screen h-fit bg-black/[.55] overflow-x-hidden">
+      <div className="w-full min-h-screen h-auto bg-black/[.55] overflow-x-hidden">
         <Header />
 
-        <div className="w-full min-h-fit h-full p-6 md:p-10 bg-[#FFE4CC] pb-8 md:pb-10 overflow-x-hidden">
+        <div className="w-full h-auto p-6 md:p-10 bg-[#FFE4CC] pb-8 md:pb-10 overflow-x-hidden">
           {/* Category Buttons */}
           <div className="w-full h-fit flex flex-row items-center justify-center min-h-[80px] md:min-h-[100px] gap-6 md:gap-10 px-4 mb-4 md:mb-6">
             {["basket", "place mat"].map((category) => (
@@ -48,7 +48,7 @@ export default function OurProducts() {
           </div>
 
           {/* Display filtered products */}
-          <div className="w-full min-h-fit h-fit flex flex-wrap justify-center items-start gap-6 md:gap-10 p-4 md:p-8 relative overflow-visible">
+          <div className="w-full h-auto flex flex-wrap justify-center items-start gap-6 md:gap-10 p-4 md:p-8 relative overflow-x-hidden">
             {filteredProducts.map((product) => (
               <div
                 key={product.id}

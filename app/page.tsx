@@ -112,13 +112,13 @@ export default function Home() {
 
 
   return (
-    <div className="bg-transparent h-700px w-full flex flex-col z-10 overflow-auto scroll-bar">
+    <div className="bg-transparent min-h-screen w-full flex flex-col z-10 overflow-auto scroll-bar">
 
-     <div className="w-full h-fit bg-black/[.55]">
+     <div className="w-full min-h-screen h-fit bg-black/[.55]">
         <Header />
 
         {/* Page Hero Display */}
-        <div className="w-full h-[600px] flex flex-col justify-center lg:items-start lg:flex-row">
+        <div className="w-full min-h-screen h-screen flex flex-col justify-center lg:items-start lg:flex-row">
  
           <div className="bg-transparent w-full lg:w-[42%] h-auto lg:h-full flex justify-center lg:justify-end items-center lg:items-start relative mt-2 lg:mt-0">
             <div className="w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] lg:w-[450px] lg:h-[450px] xl:w-[500px] xl:h-[500px] lg:absolute lg:top-0 lg:left-[15%] opacity-0 animate-zoomIn flex-shrink-0" style={{ animationDelay: "0.2s" }}>

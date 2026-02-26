@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import Image from "next/image";
 import backgroundImage from '../public/bakcground-image.png';
 
 
@@ -90,14 +89,17 @@ export default function RootLayout({
 
         {children}
 
-        <div className="h-screen w-full absolute top-0 left-0 z-0">
-          <Image 
-            src={backgroundImage} 
-            alt="background"
-            fill
-            className="w-full h-full"
-          />
-        </div>
+        <div 
+          className="fixed inset-0 w-full h-full z-0"
+          style={{
+            backgroundImage: `url(${backgroundImage.src})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center 20%',
+            backgroundRepeat: 'no-repeat',
+            backgroundAttachment: 'fixed'
+          }}
+          aria-label="background"
+        />
 
       </body>
     </html>

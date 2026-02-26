@@ -98,14 +98,15 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.scroll-bar::-webkit-scrollbar {
+::-webkit-scrollbar {
   display: none; 
 }
 
 .bg-contact{
   background-image: url("../public/contact\ background\ image.png");
-
-  background-size: 100% 100%;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 .text-shadow-contact{
