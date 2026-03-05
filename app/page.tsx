@@ -114,14 +114,14 @@ export default function Home() {
   return (
     <div className="bg-transparent min-h-screen w-full flex flex-col z-10 overflow-auto scroll-bar">
 
-     <div className="w-full min-h-screen h-fit bg-black/[.55]">
+     <div className="w-full h-fit bg-black/[.55]">
         <Header />
 
         {/* Page Hero Display */}
-        <div className="w-full min-h-screen h-screen flex flex-col justify-center lg:items-start lg:flex-row">
+        <div className="w-full min-h-[1200px]flex flex-col justify-center items-center overflow-hidden">
  
-          <div className="bg-transparent w-full lg:w-[42%] h-auto lg:h-full flex justify-center lg:justify-end items-center lg:items-start relative mt-2 lg:mt-0">
-            <div className="w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] lg:w-[450px] lg:h-[450px] xl:w-[500px] xl:h-[500px] lg:absolute lg:top-0 lg:left-[15%] opacity-0 animate-zoomIn flex-shrink-0" style={{ animationDelay: "0.2s" }}>
+          <div className="bg-transparent w-full h-auto flex justify-center items-center relative mt-2">
+            <div className="w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] lg:w-[450px] lg:h-[450px] xl:w-[500px] xl:h-[500px] opacity-0 animate-zoomIn flex-shrink-0" style={{ animationDelay: "0.2s" }}>
               <Image
                 src={heroLogo}
                 width={800}
@@ -133,8 +133,8 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="bg-transparent w-full lg:w-[58%] h-auto lg:h-full flex items-center lg:items-start justify-center lg:justify-start lg:mt-20 px-4 lg:px-0">
-            <h1 className="text-[#FFE4CC] w-full lg:w-[80%] text-[32px] sm:text-[42px] lg:text-[65px] ms-0 lg:ms-24 leading-[1.2] font-krono mb-10 lg:mb-20 text-center lg:text-left animate-slideInLeft animate-glow" style={{ animationDelay: "0.5s" }}>
+          <div className="bg-transparent w-full h-auto flex items-center justify-center px-4">
+            <h1 className="text-[#FFE4CC] w-full text-[32px] sm:text-[42px] lg:text-[65px] leading-[1.2] font-krono mb-10 lg:mb-20 text-center animate-slideInLeft animate-glow" style={{ animationDelay: "0.5s" }}>
               <span className="inline-block opacity-0 animate-textReveal" style={{ animationDelay: "0.8s" }}>Creativity</span>{" "}
               <span className="inline-block opacity-0 animate-textReveal" style={{ animationDelay: "1.0s" }}>Crafted</span>{" "}
               <span className="inline-block opacity-0 animate-textReveal" style={{ animationDelay: "1.2s" }}>by</span>{" "}
@@ -142,11 +142,11 @@ export default function Home() {
               <span className="inline-block opacity-0 animate-textReveal" style={{ animationDelay: "1.6s" }}>Community</span>
             </h1>
           </div>
-        </div>
-        
-        {/* Partners Carousel - Full Width */}
-        <div className="w-full">
-          <PartnersCarousel showTitle={true} animationDelay="2.0s" />
+
+          {/* Partners Carousel - Full Width */}
+          <div className="w-full h-fit overflow-hidden">
+            <PartnersCarousel showTitle={true} animationDelay="2.0s" className="!mt-0" />
+          </div>
         </div>
       </div>
 
